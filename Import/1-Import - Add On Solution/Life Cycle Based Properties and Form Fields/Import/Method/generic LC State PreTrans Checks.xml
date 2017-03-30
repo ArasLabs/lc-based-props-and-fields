@@ -1,0 +1,369 @@
+﻿<AML>
+ <Item type="Method" id="D123FBA2757643A9B0B211EB4CF78FED" action="add">
+  <comments>called from Validation Report and from State Pre-Transion events</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA['generic LC PreTrans Validations
+
+'MethodTemplateName=VBMain;
+Dim inn As Innovator = Me.getInnovator()
+Dim lifeCycleStateId As String
+Dim checkMode As String
+Dim res As Item
+Dim resultMessage As String = ""
+Dim errorCount As Integer = 0
+Dim LCtoStateChecks As Item
+Dim propSourceItemId As String
+
+Function Main() As Item
+  'System.Diagnostics.Debugger.Break()
+  lifeCycleStateId = Me.getAttribute("lifeCycleStateId","")
+  checkMode = Me.getAttribute("checkMode","")  'can be 'report all' to collect errors. Else return on first found
+  
+  Dim requiredProps As String = ""
+  Dim tempErrStr As String = ""
+  propSourceItemId = Me.getAttribute("typeId","")
+  
+  LCToStateChecks = getRequiredPropertiesOfItemTypeAndState(Me.GetType(),lifeCycleStateId, requiredProps)
+  errorCount = validatePropertiesOfItemType(Me.GetType(), requiredProps, False)
+  If (errorCount >= 1) Then
+    If (checkMode <> "report all") Then Return buildResultItem()
+  End If
+  
+  'read config of thisItemType to get all realtionships
+  Dim relsNameArray As String() = getRelationshipNamesOfItemType(Me.GetType()).split(",")
+  
+  'add required properties from relationships
+  Dim i As Integer
+  For i=0 To relsNameArray.Length-1
+
+    LCToStateChecks = getRequiredPropertiesOfItemTypeAndState(relsNameArray(i),lifeCycleStateId, requiredProps)
+
+  	If (requiredProps <> "") Then
+  	  Dim tempErrCount As Integer = validatePropertiesOfItemType(relsNameArray(i), requiredProps, True )
+      
+      If (tempErrCount >= 1) Then
+        errorCount = errorCount + tempErrCount
+        If (checkMode <> "report all") Then Return buildResultItem()
+      End If
+
+  	End If
+
+  Next i
+
+  resultMessage = resultMessage.Replace("||","|")  
+  Return buildResultItem()
+End Function
+
+'--------
+Private Function getRequiredPropertiesOfItemTypeAndState(itemTypeName As String, lifeCycleStateId As String, ByRef requiredProps As String ) As Item
+' returns comma separated list of ids, or "" if none found
+
+  Dim aml As String = "<Item type='Property LC State Check' action='get' " & _
+  "  select='source_id(source_id,label),life_cycle_state_id(name),is_required," & _
+  "  expected_property_values,property_check_user_message,property_check_user_message_id(text),depends_on_property,depends_on_property_values'>" & _
+  " <source_id>" & _
+  "   <Item type='Property' action='get' select='id'>" & _
+  "     <source_id>" & _
+  "       <Item type='ItemType' action='get' select='id'>" & _
+  "	     <name>" & itemTypeName & "</name>" & _
+  "       </Item>" & _
+  "     </source_id>" & _
+  "   </Item>" & _
+  " </source_id>" & _
+  " <life_cycle_state_id>" & lifeCycleStateId & "</life_cycle_state_id>" & _
+  " <is_required>1</is_required>" & _
+  "</Item>"
+
+  Dim q As Item = inn.newItem("","")
+  q.loadAML(aml)
+ 
+  Dim res As Item = q.apply()  
+  If res.isError() Then Return res
+
+  'set global variable to be used later in validations
+  aml= "<Item type='Property' action='get' select='source_id,id,name' ><id>" & res.getItemByIndex(0).getProperty("source_id","invalid") & "</id></Item>"
+  q = inn.newItem("","")
+  q.loadAML(aml)
+  q = q.apply()  
+  If q.isError() Then Return q
+  propSourceItemId = q.getProperty("source_id","invalid")
+  
+  'build names list
+  Dim sepChar As String = ""
+  Dim retStr As String = ""
+  Dim i As Integer
+  For i=0 To res.getItemCount()-1
+  	Dim propName As String = res.getItemByIndex(i).getPropertyItem("source_id").getPropertyAttribute("id","keyed_name","")
+  	If retStr.indexOf(propName) < 0 Then retStr = retStr & sepChar & propName
+  	sepChar = ","
+  Next i
+
+  requiredProps  = retStr
+  Return res
+End Function
+
+
+'--------
+Private Function getRelationshipNamesOfItemType(itemTypeName As String) As String
+' returns comma separated list of names, or "" if none found
+  Dim aml As String = "<Item type='RelationshipType' action='get' select='source_id(name),name,sort_order,'>" & _
+  " <source_id>" & _
+  "  <Item type='ItemType' action='get' select='id'>" & _
+  "	   <name>" & itemTypeName & "</name>" & _
+  "  </Item>" & _
+  " </source_id>" & _
+  "</Item>"
+
+  Dim q As Item = inn.newItem("","")
+  q.loadAML(aml)
+  
+  q = q.apply()
+  If q.isError() Then Return ""
+  
+  'build ids list
+  Dim sepChar As String = ""
+  Dim retStr As String = ""
+  Dim i As Integer
+  For i=0 To q.getItemCount()-1
+  	retStr = retStr  & sepChar & q.getItemByIndex(i).getProperty("name","")
+  	sepChar = ","
+  Next i
+ 
+  Return retStr
+
+End Function
+
+'--------
+Private Function validatePropertiesOfItemType(itemTypeName As String, ByRef requiredProps As String, isRelShip As Boolean) As Integer
+' adds error messages to 'errStr' separted by "|"
+' if it's a warning only, then tag the message with '[W]'
+' returns 0 if all properties are validated, return count of invalid properties found
+  Dim retErrCount As Integer = 0
+  Dim errStr As String = ""
+
+  'read actual property values of itemType
+  Dim aml As String = "<Item type='" & itemTypeName & "' action='get' doGetItem='0' serverEvents='0' " & _
+  "select='" & requiredProps  & ",locked_by_id(keyed_name),state,current_state,generation' >"
+  If isRelShip Then
+    aml = aml & " <source_id>" & Me.GetID() & "</source_id>"
+  Else
+    aml = aml & " <id>" & Me.GetID() & "</id>"
+  End If
+  aml = aml & "</Item>"
+  
+  Dim q As Item = inn.newItem("","")
+  q.loadAML(aml)
+  Dim itemsToValidate As Item = q.apply()
+  If itemsToValidate.getItemCount() <= 0 Then Return 0
+
+  'System.Diagnostics.Debugger.Break()
+ Dim v As Integer
+ For v=0 To itemsToValidate.getItemCount() -1
+  Dim itemToValidate As Item = itemsToValidate.getItemByIndex(v)
+  Dim um As Item  
+  If Not isRelShip Then
+
+   'check, if item already is in state to be checked
+   If itemToValidate.getProperty("current_state","") = lifeCycleStateId Then
+    um = inn.getItemByKeyedName("UserMessage","Item_Validation_Item_In_Status_To_Check")
+    If um.getItemCount() > 0 Then
+      retErrCount = retErrCount + 1
+      addResultMessage("[W]" & um.getProperty("text","Item_Validation_Item_In_Status_To_Check"))
+      'Goto RETURN_VALIDATION_ERRORS
+    End If
+   End If
+
+   'check who still has locked the item
+   If itemToValidate.getLockStatus() > 0 Then
+    Dim lockedBy As String = itemToValidate.getProperty("locked_by_id","someone")
+    If lockedBy <> "" Then
+      lockedBy = itemToValidate.getPropertyItem("locked_by_id").getProperty("keyed_name","someone")
+    Else
+     lockedBy ="someone"
+    End If
+    
+    um = inn.getItemByKeyedName("UserMessage","Item_Validation_Item_Is_Still_Locked")
+    If um.getItemCount() > 0 Then
+      retErrCount = retErrCount + 1
+      addResultMessage("[W]" & String.Format(um.getProperty("text","Item_Validation_Item_Is_Still_Locked"),lockedBy))
+    End If
+   End If
+
+  End If 
+
+  Dim propName As String
+  Dim propUserMessage As String
+  Dim propExpectedValues As String
+  Dim propValue As String
+  Dim propertyLCstateToCheck As Item
+  
+  ' loop through props without dependencies and do first round validations
+  Dim propertyLCstatesToCheck As Item = LCtoStateChecks.getItemsByXPath("/*/*/Result/Item[depends_on_property = '']")
+  Dim propsListPassed As String = ""
+  Dim sepChar As String = ""
+  Dim i As Integer
+  For i=0 To propertyLCstatesToCheck.getItemCount()-1
+    propertyLCstateToCheck = propertyLCstatesToCheck.getItemByIndex(i) 
+	propName = propertyLCstateToCheck.getPropertyItem("source_id").getPropertyAttribute("id","keyed_name","")
+    propExpectedValues = propertyLCstateToCheck.getProperty("expected_property_values","")
+
+  	propUserMessage = propertyLCstateToCheck.getProperty("property_check_user_message","")
+  	' user message could come from link to message library
+  	If propUserMessage = "" And propertyLCstateToCheck.getProperty("property_check_user_message_id","") <> "" Then
+  	  propUserMessage = propertyLCstateToCheck.getPropertyItem("property_check_user_message_id").getProperty("text","")
+    Else
+  	  if propUserMessage = "" then propUserMessage = "Property LC State Check failed (--> no user message registered for property '" & propName & "'. See your System Administrator.)"
+    End If
+
+    'read actual value of this property from thisItem (Me)
+	propValue = itemToValidate.getProperty(propName,"")
+
+    errStr = validatePropValAgainstExpectedVals (propSourceItemId,propName, propValue, propExpectedValues, propUserMessage)
+    If (errStr <> "") Then  'failed
+      retErrCount = retErrCount + 1
+      addResultMessage(errStr)
+  	  If (checkMode <> "report all") Then Goto RETURN_VALIDATION_ERRORS
+    Else  'passed
+	  propsListPassed = propsListPassed & sepChar & propName
+	  sepChar = ","
+  	End If
+
+  Next i
+
+  'recursively check, if all passedProps have dependent props that also need to be validated
+  While propsListPassed <> "" 
+    Dim propsPassedArray As String() = propsListPassed.split(",")
+
+    propsListPassed = ""
+    sepChar = ""
+    Dim j As Integer
+    For j=0 To propsPassedArray.Length -1
+      propertyLCstatesToCheck = LCtoStateChecks.getItemsByXPath("/*/*/Result/Item[depends_on_property = '" & propsPassedArray(j) & "']")
+
+	  For i=0 To propertyLCstatesToCheck.getItemCount()-1
+        propertyLCstateToCheck = propertyLCstatesToCheck.getItemByIndex(i) 
+	    propName = propertyLCstateToCheck.getPropertyItem("source_id").getPropertyAttribute("id","keyed_name","")
+        propExpectedValues = propertyLCstateToCheck.getProperty("expected_property_values","")
+
+  	    propUserMessage = propertyLCstateToCheck.getProperty("property_check_user_message","")
+  	    ' user message could come from link to message library
+  	    If propUserMessage = "" And propertyLCstateToCheck.getProperty("property_check_user_message_id","") <> "" Then
+  	      propUserMessage = propertyLCstateToCheck.getPropertyItem("property_check_user_message_id").getProperty("text","")
+ 	    End If
+
+        Dim dependentPropExpectedValues As String = propertyLCstateToCheck.getProperty("depends_on_property_values","")
+
+		'read actual value of this property from thisItem (Me)
+	    propValue = itemToValidate.getProperty(propName,"")
+	    Dim dependentPropValue As String = itemsToValidate.getProperty(propsPassedArray(j),"")
+	    
+	    If (dependentPropExpectedValues.indexOf(dependentPropValue) >= 0) Then 'further validations only, if dependentProp meets defined values
+
+          errStr = validatePropValAgainstExpectedVals (propSourceItemId,propName, propValue, propExpectedValues, propUserMessage)
+          If (errStr <> "") Then  'failed
+            retErrCount = retErrCount + 1
+            addResultMessage(errStr)
+  	        If (checkMode <> "report all") Then Goto RETURN_VALIDATION_ERRORS
+          Else  'passed
+	        propsListPassed = propsListPassed & sepChar & propName
+	        sepChar = ","
+  	      End If
+        End If
+
+      Next i
+
+    Next j
+	
+  End While  
+
+Next v
+  
+RETURN_VALIDATION_ERRORS:
+  Return retErrCount
+
+End Function
+
+'--------
+Private Function validatePropValAgainstExpectedVals(propSourceItemId As String, propName As String, propValue As String, ByRef expectedPropValues As String, ByRef propUserMessage As String) As String
+  'returns validation message or "", if validation is OK
+  Dim isReturnMsg As Integer = 0
+
+  '1st validate if actual value of required prop exists
+  If propValue <> "" Then
+  
+    '2nd validate against expected values
+  	If expectedPropValues <> "" Then
+  	  If Not isExpectedPropValueMatched(propValue,expectedPropValues) Then
+  	    isReturnMsg = 2
+  	  End If
+  	End If
+  Else 'no value set, but is required
+  	isReturnMsg = 1 'empty expected results
+  End If
+
+  If isReturnMsg > 0 Then
+    Dim propItm As Item = inn.newItem("","")
+    propItm.loadAML("<Item type='Property' action='get' select='id,name,label'><name>" & propName & "</name><source_id>" & propSourceItemId & "</source_id></Item>")
+    propItm = propItm.apply()
+    
+    Dim propLabel As String = propName
+    If Not propItm.isError() Then
+      propLabel = propItm.getProperty("label",propName)
+      'Dim propId As String = propItm.getId()
+    End If
+
+    If isReturnMsg = 1 Then Return ResolveUserMessagePlaceholders(propUserMessage,propLabel,"")
+    If isReturnMsg = 2 Then Return ResolveUserMessagePlaceholders(propUserMessage,propLabel,expectedPropValues)
+  End If
+
+  Return ""
+End Function
+
+
+'--------
+Private Function isExpectedPropValueMatched(propValue As String,expectedPropValues As String) As Boolean
+  Dim expValuesArray As String() = expectedPropValues.split(",")
+  
+  Dim i As Integer
+  ' is propValue found in array
+  For i=0 To expValuesArray.Length -1
+    If propValue = expValuesArray(i) Then Return True
+  Next i
+
+  Return False
+End Function
+
+'--------
+Private Function ResolveUserMessagePlaceholders(propUserMessage As String, propName As String, ByRef expectedVals As String) As String
+ 'for now allowed placeholders are: {property_name}, {expected_property_values}
+  propUserMessage = propUserMessage.Replace("{property_name}",propName)
+  propUserMessage = propUserMessage.Replace("{expected_property_values}",expectedVals)
+
+  Return propUserMessage
+End Function
+
+'--------
+Private Function addResultMessage(newMsg As String) As String
+  Dim currMsg As String = resultMessage
+  Dim sepChar As String = "|"	
+  If newMsg <> "" Then
+    newMsg = sepChar & newMsg
+    If currMsg.indexOf(newMsg) < 0 Then currMsg = currMsg & newMsg
+  End If
+
+  resultMessage = currMsg
+  Return currMsg
+End Function
+
+'--------
+Private Function buildResultItem() As Item
+  If errorCount = 0 Then Return inn.newResult("OK")
+  If (checkMode <> "report all") Then Return inn.newError(resultMessage.split("|")(1))
+  
+  Return inn.newError(resultMessage)
+End Function
+]]></method_code>
+  <method_type>VB</method_type>
+  <name>generic LC State PreTrans Checks</name>
+ </Item>
+</AML>

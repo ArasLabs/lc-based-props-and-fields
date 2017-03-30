@@ -1,0 +1,365 @@
+﻿<AML>
+ <Item type="RelationshipType" id="D9AFC4F6163947C296F0704E08ECADBC" action="add" dependencyLevel="1">
+  <auto_search>1</auto_search>
+  <behavior>float</behavior>
+  <copy_permissions>0</copy_permissions>
+  <create_related>0</create_related>
+  <hide_in_all>0</hide_in_all>
+  <inc_rel_key_name>1</inc_rel_key_name>
+  <inc_related_key_name>1</inc_related_key_name>
+  <is_list_type>0</is_list_type>
+  <label xml:lang="en">State specific Property Checks</label>
+  <name>Property LC State Check</name>
+  <new_show_related>0</new_show_related>
+  <related_notnull>0</related_notnull>
+  <related_option>2</related_option>
+  <relationship_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">
+   <Item type="ItemType" id="F37FDFE5DE2B46DD84195CF9A5804A6C" action="add">
+    <allow_private_permission>1</allow_private_permission>
+    <auto_search>0</auto_search>
+    <enforce_discovery>0</enforce_discovery>
+    <hide_where_used>0</hide_where_used>
+    <implementation_type>table</implementation_type>
+    <instance_data>PROPERTY_LC_STATE_CHECK</instance_data>
+    <is_dependent>0</is_dependent>
+    <is_recently_visited>0</is_recently_visited>
+    <is_relationship>1</is_relationship>
+    <is_versionable>0</is_versionable>
+    <label xml:lang="en">Property LC State Check</label>
+    <label_plural xml:lang="en">Property LC State Checks</label_plural>
+    <manual_versioning>0</manual_versioning>
+    <name>Property LC State Check</name>
+    <open_icon>../images/Icons/16x16/16x16_relationship1.gif</open_icon>
+    <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+    <show_parameters_tab>1</show_parameters_tab>
+    <unlock_on_logout>0</unlock_on_logout>
+    <use_src_access>1</use_src_access>
+    <Relationships>
+     <Item type="Property" id="8960661A440C492F83275AFC90DF79C1" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>200</column_width>
+      <data_type>string</data_type>
+      <default_value xml:lang="en"></default_value>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">Comments</label>
+      <name>comments</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>11</sort_order>
+      <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+      <stored_length>255</stored_length>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="7AA524D380FB4C998064B29736163C7B" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>100</column_width>
+      <data_type>string</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">Depends On Property</label>
+      <name>depends_on_property</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>7</sort_order>
+      <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+      <stored_length>64</stored_length>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="12E3C90294CC409CB9F987C22AB702E4" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>200</column_width>
+      <data_type>string</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">Exp Values of Dependent Property</label>
+      <name>depends_on_property_values</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>8</sort_order>
+      <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+      <stored_length>512</stored_length>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="0C37DF06178F4B0E95590DFE686CD82F" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>200</column_width>
+      <data_type>string</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">Expected Values</label>
+      <name>expected_property_values</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>6</sort_order>
+      <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+      <stored_length>512</stored_length>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="FDAD5B0800AA4BA8816F90215F611ADD" action="add">
+      <column_alignment>center</column_alignment>
+      <column_width>80</column_width>
+      <data_type>boolean</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">RelShip</label>
+      <name>is_relationship</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>1</readonly>
+      <sort_order>1</sort_order>
+      <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="B2B2F87B9F1C40BBA13D56928E1430E6" action="add">
+      <column_alignment>center</column_alignment>
+      <column_width>60</column_width>
+      <data_type>boolean</data_type>
+      <default_value xml:lang="en">1</default_value>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">Rqrd</label>
+      <name>is_required</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>4</sort_order>
+      <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="D725A94D135F421980DA26149EAD7219" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>120</column_width>
+      <data_source>
+       <Item type="Property" action="get" select="id">
+        <name>life_cycle_state_id</name>
+        <source_id>F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+       </Item>
+      </data_source>
+      <data_type>foreign</data_type>
+      <foreign_property>
+       <Item type="Property" action="get" select="id">
+        <keyed_name>source_id</keyed_name>
+        <source_id>
+         <Item type="ItemType" action="get" select="id">
+          <name>Life Cycle State</name>
+         </Item>
+        </source_id>
+       </Item>
+      </foreign_property>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">Life Cycle Name</label>
+      <name>life_cycle_name</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>3</sort_order>
+      <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="914537071E264CFCA52130DF4BB2052E" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>120</column_width>
+      <data_source keyed_name="Life Cycle State" type="ItemType" name="Life Cycle State">5EFB53D35BAE468B851CD388BEA46B30</data_source>
+      <data_type>item</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>1</is_required>
+      <item_behavior>float</item_behavior>
+      <label xml:lang="en">Life Cycle State</label>
+      <name>life_cycle_state_id</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>2</sort_order>
+      <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="8A43B46A644343D3AA7A9C4F15E2AFDA" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>200</column_width>
+      <data_type>ml_string</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">User Message</label>
+      <name>property_check_user_message</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>9</sort_order>
+      <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+      <stored_length>255</stored_length>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="A9F335F184EA468D84CBECC0D11CE6E6" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>100</column_width>
+      <data_source keyed_name="UserMessage" type="ItemType" name="UserMessage">122BF06C8B8E423A9931604DD939172F</data_source>
+      <data_type>item</data_type>
+      <default_value xml:lang="en">99865524B48D40CDBA55F8DB4B27A646</default_value>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <item_behavior>float</item_behavior>
+      <label xml:lang="en">Linked User Message</label>
+      <name>property_check_user_message_id</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>10</sort_order>
+      <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="830ED24853914FC0AF137467EFB67247" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>100</column_width>
+      <data_source>
+       <Item type="Property" action="get" select="id">
+        <name>source_id</name>
+        <source_id>F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+       </Item>
+      </data_source>
+      <data_type>foreign</data_type>
+      <foreign_property>
+       <Item type="Property" action="get" select="id">
+        <keyed_name>source_id</keyed_name>
+        <source_id>
+         <Item type="ItemType" action="get" select="id">
+          <name>Property</name>
+         </Item>
+        </source_id>
+       </Item>
+      </foreign_property>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">ItemType</label>
+      <name>property_item_type</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>0</sort_order>
+      <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Server Event" id="E59DD1B4B736486AB2BB71C95D818F6B" action="add">
+      <related_id keyed_name="Property LC State Check onAdd" type="Method">
+       <Item type="Method" action="get" select="id">
+        <name>Property LC State Check onAdd</name>
+       </Item>
+      </related_id>
+      <server_event>onBeforeAdd</server_event>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+     </Item>
+     <Item type="Server Event" id="AFBBEDC6E8D34E29940703E1615008D3" action="add">
+      <related_id keyed_name="Property LC State Check onAdd" type="Method">
+       <Item type="Method" action="get" select="id">
+        <name>Property LC State Check onAdd</name>
+       </Item>
+      </related_id>
+      <server_event>onBeforeUpdate</server_event>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+     </Item>
+     <Item type="TOC Access" id="72033335CF79400980AD9C67877014FA" action="add">
+      <category>Administration</category>
+      <related_id keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+     </Item>
+    
+     <Item type="View" id="5E3B7AD7F03341A39BC194F1985E0606" action="add">
+      <client>js</client>
+      <is_exclude_from_recently_visited>0</is_exclude_from_recently_visited>
+      <related_id keyed_name="Property LC State Check" type="Form">7A7557073A0E4C85B0D76675D3E70DE7</related_id>
+      <role keyed_name="World" type="Identity">
+       <Item type="Identity" action="get" select="id">
+        <name>World</name>
+       </Item>
+      </role>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+      <type>default</type>
+     </Item></Relationships>
+   </Item>
+  </relationship_id>
+  <sort_order>256</sort_order>
+  <source_id keyed_name="Property" type="ItemType" name="Property">26D7CD4E033242148E2724D3D054B4D3</source_id>
+ </Item>
+ <Item type="ItemType" id="F37FDFE5DE2B46DD84195CF9A5804A6C" action="edit">
+  <Relationships>
+   <Item type="Property" action="edit" where="source_id='F37FDFE5DE2B46DD84195CF9A5804A6C' and name='generation'">
+    <column_alignment>left</column_alignment>
+    <data_type>integer</data_type>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_required>0</is_required>
+    <name>generation</name>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>2432</sort_order>
+    <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+    <track_history>0</track_history>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='F37FDFE5DE2B46DD84195CF9A5804A6C' and name='source_id'">
+    <column_alignment>left</column_alignment>
+    <column_width>100</column_width>
+    <data_source keyed_name="Property" type="ItemType" name="Property">26D7CD4E033242148E2724D3D054B4D3</data_source>
+    <data_type>item</data_type>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>1</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">Property</label>
+    <name>source_id</name>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>5</sort_order>
+    <source_id keyed_name="Property LC State Check" type="ItemType" name="Property LC State Check">F37FDFE5DE2B46DD84195CF9A5804A6C</source_id>
+    <track_history>0</track_history>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,33 @@
+﻿<AML>
+ <Item type="Method" id="1F06374A8C9E41C39B8C907C2EFF33BC" action="add">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[' onBefore Add/Update of Relationship ItemType 'Property LC State Check'
+Dim inn As Innovator = Me.getInnovator()
+Dim LCtransitionId As String = Me.getProperty("life_cycle_transition_id","")
+Dim LCtransition As Item = Me.newItem("Life Cycle Transition","get")
+
+If LCtransitionId <> "" Then
+  LCtransition.setID(LCtransitionId)
+  LCtransition.setAttribute("select","source_id(name),from_state(name),to_state(name)")
+  LCtransition = LCtransition.apply()
+  
+  If LCtransition.isError() Then Return LCtransition
+  
+  Dim propItem As Item = LCtransition.getPropertyItem("source_id")
+  
+  Dim propVal As String = propItem.getProperty("name")
+  Me.setProperty("life_cycle_name",propVal)
+  propItem = LCtransition.getPropertyItem("from_state")
+  propVal = propItem.getProperty("name")
+  Me.setProperty("life_cycle_state_from",propVal)
+  propItem = LCtransition.getPropertyItem("to_state")
+  propVal = propItem.getProperty("name")
+  Me.setProperty("life_cycle_state_to",propVal)
+
+End If
+
+Return Me]]></method_code>
+  <method_type>VB</method_type>
+  <name>PropsLC StateCheck AutoFill Data</name>
+ </Item>
+</AML>

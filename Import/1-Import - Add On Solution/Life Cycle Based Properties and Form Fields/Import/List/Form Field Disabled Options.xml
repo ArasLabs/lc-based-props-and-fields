@@ -1,0 +1,31 @@
+﻿<AML>
+ <Item type="List" id="7ABB0A99191F46C485E9820882765566" action="add">
+  <name>Form Field Disabled Options</name>
+  <Relationships>
+   <Item type="Value" id="1210EC28A7434368924F299B4BABA28B" action="add">
+    <label xml:lang="en">Disabled</label>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="Form Field Disabled Options" type="List">7ABB0A99191F46C485E9820882765566</source_id>
+    <value>disabled</value>
+   </Item>
+   <Item type="Value" id="935B599B193448149BD6744B20A538FA" action="add">
+    <label xml:lang="en">Enabled</label>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="Form Field Disabled Options" type="List">7ABB0A99191F46C485E9820882765566</source_id>
+    <value>enabled</value>
+   </Item>
+   <Item type="Value" id="D28F0D9BAAA246E5AD6891257F1F4E27" action="add">
+    <label xml:lang="en">Hard Disabled</label>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="Form Field Disabled Options" type="List">7ABB0A99191F46C485E9820882765566</source_id>
+    <value>hard_diabled</value>
+   </Item>
+   <Item type="Value" id="A40AC7DB6ECC4E68A534FDEE0ADB366A" action="add">
+    <label xml:lang="en">Hard Enabled</label>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="Form Field Disabled Options" type="List">7ABB0A99191F46C485E9820882765566</source_id>
+    <value>hard_enabled</value>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,325 @@
+﻿<AML>
+ <Item type="RelationshipType" id="41487F97E1EB424C96FDC98206FDD1D8" action="add" dependencyLevel="1">
+  <auto_search>1</auto_search>
+  <behavior>float</behavior>
+  <copy_permissions>0</copy_permissions>
+  <create_related>0</create_related>
+  <hide_in_all>0</hide_in_all>
+  <inc_rel_key_name>1</inc_rel_key_name>
+  <inc_related_key_name>1</inc_related_key_name>
+  <is_list_type>0</is_list_type>
+  <label xml:lang="en">State specific Form Fields Options</label>
+  <name>Property LC State Field Option</name>
+  <new_show_related>0</new_show_related>
+  <related_notnull>0</related_notnull>
+  <related_option>2</related_option>
+  <relationship_id keyed_name="Property LC State Field Option" type="ItemType" name="Property LC State Field Option">
+   <Item type="ItemType" id="44FE6A3F6BEE404A8CF58B87B12D8D0D" action="add">
+    <allow_private_permission>1</allow_private_permission>
+    <auto_search>0</auto_search>
+    <enforce_discovery>0</enforce_discovery>
+    <hide_where_used>0</hide_where_used>
+    <implementation_type>table</implementation_type>
+    <instance_data>PROPERTY_LC_STATE_FIELD_OPTION</instance_data>
+    <is_dependent>0</is_dependent>
+    <is_recently_visited>0</is_recently_visited>
+    <is_relationship>1</is_relationship>
+    <is_versionable>0</is_versionable>
+    <label xml:lang="en">Property LC State Field Option</label>
+    <label_plural xml:lang="en">Property LC State Field Options</label_plural>
+    <manual_versioning>0</manual_versioning>
+    <name>Property LC State Field Option</name>
+    <open_icon>../images/Icons/16x16/16x16_relationship1.gif</open_icon>
+    <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+    <show_parameters_tab>1</show_parameters_tab>
+    <unlock_on_logout>0</unlock_on_logout>
+    <use_src_access>1</use_src_access>
+    <Relationships>
+     <Item type="Property" id="3E6BA606571F494483B3133B32CF6490" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>120</column_width>
+      <data_source keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</data_source>
+      <data_type>item</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <item_behavior>float</item_behavior>
+      <label xml:lang="en">Enable For Identity</label>
+      <name>enable_for_identity_id</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>7</sort_order>
+      <source_id keyed_name="Property LC State Field Option" type="ItemType" name="Property LC State Field Option">44FE6A3F6BEE404A8CF58B87B12D8D0D</source_id>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="DAA6DEB00E75477997A6057EF452571C" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>80</column_width>
+      <data_source keyed_name="Form Field Disabled Options">7ABB0A99191F46C485E9820882765566</data_source>
+      <data_type>list</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">Disabled Option</label>
+      <name>form_field_disabled_option</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>8</sort_order>
+      <source_id keyed_name="Property LC State Field Option" type="ItemType" name="Property LC State Field Option">44FE6A3F6BEE404A8CF58B87B12D8D0D</source_id>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="F5000DFA54684996AEEF1CB899FE59E8" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>120</column_width>
+      <data_type>string</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">Field Name</label>
+      <name>form_field_name</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>1</readonly>
+      <sort_order>6</sort_order>
+      <source_id keyed_name="Property LC State Field Option" type="ItemType" name="Property LC State Field Option">44FE6A3F6BEE404A8CF58B87B12D8D0D</source_id>
+      <stored_length>64</stored_length>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="3CCCF88489354B90BE95D765D302220E" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>100</column_width>
+      <data_source keyed_name="Field Types">DA63CDCCBB654870B291EBA9A5FFBBA9</data_source>
+      <data_type>list</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">Field Type</label>
+      <name>form_field_type</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>5</sort_order>
+      <source_id keyed_name="Property LC State Field Option" type="ItemType" name="Property LC State Field Option">44FE6A3F6BEE404A8CF58B87B12D8D0D</source_id>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="872DBD597D6E40B48D084419808F5A00" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>80</column_width>
+      <data_source keyed_name="Form Field Visible Options">63C6115950C74FE287BA9FE10D040D57</data_source>
+      <data_type>list</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">Visible Option</label>
+      <name>form_field_visible_option</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>10</sort_order>
+      <source_id keyed_name="Property LC State Field Option" type="ItemType" name="Property LC State Field Option">44FE6A3F6BEE404A8CF58B87B12D8D0D</source_id>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="2FB1D651C9174F5F9FF944E003E1292D" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>120</column_width>
+      <data_type>string</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">Form Name</label>
+      <name>form_name</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>4</sort_order>
+      <source_id keyed_name="Property LC State Field Option" type="ItemType" name="Property LC State Field Option">44FE6A3F6BEE404A8CF58B87B12D8D0D</source_id>
+      <stored_length>64</stored_length>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="C6C3A3E7018D442B920FE61AB075DA8B" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>120</column_width>
+      <data_source>
+       <Item type="Property" action="get" select="id">
+        <name>life_cycle_state_id</name>
+        <source_id>44FE6A3F6BEE404A8CF58B87B12D8D0D</source_id>
+       </Item>
+      </data_source>
+      <data_type>foreign</data_type>
+      <foreign_property>
+       <Item type="Property" action="get" select="id">
+        <keyed_name>source_id</keyed_name>
+        <source_id>
+         <Item type="ItemType" action="get" select="id">
+          <name>Life Cycle State</name>
+         </Item>
+        </source_id>
+       </Item>
+      </foreign_property>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">Life Cycle Name</label>
+      <name>life_cycle_name</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>3</sort_order>
+      <source_id keyed_name="Property LC State Field Option" type="ItemType" name="Property LC State Field Option">44FE6A3F6BEE404A8CF58B87B12D8D0D</source_id>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="4E9C63E7D77144E7A0308D0479F8601D" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>100</column_width>
+      <data_source keyed_name="Life Cycle State" type="ItemType" name="Life Cycle State">5EFB53D35BAE468B851CD388BEA46B30</data_source>
+      <data_type>item</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <item_behavior>float</item_behavior>
+      <label xml:lang="en">Life Cycle State</label>
+      <name>life_cycle_state_id</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>2</sort_order>
+      <source_id keyed_name="Property LC State Field Option" type="ItemType" name="Property LC State Field Option">44FE6A3F6BEE404A8CF58B87B12D8D0D</source_id>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="66EA173D8EB346318F8836AC8EC1FE51" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>120</column_width>
+      <data_source>
+       <Item type="Property" action="get" select="id">
+        <name>source_id</name>
+        <source_id>44FE6A3F6BEE404A8CF58B87B12D8D0D</source_id>
+       </Item>
+      </data_source>
+      <data_type>foreign</data_type>
+      <foreign_property>
+       <Item type="Property" action="get" select="id">
+        <keyed_name>source_id</keyed_name>
+        <source_id>
+         <Item type="ItemType" action="get" select="id">
+          <name>Property</name>
+         </Item>
+        </source_id>
+       </Item>
+      </foreign_property>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">ItemType</label>
+      <name>property_item_type</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>0</sort_order>
+      <source_id keyed_name="Property LC State Field Option" type="ItemType" name="Property LC State Field Option">44FE6A3F6BEE404A8CF58B87B12D8D0D</source_id>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="92E2860E21F9462AA87BE239A91ADE5F" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>120</column_width>
+      <data_type>string</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">Visible With Property</label>
+      <name>visible_with_property</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>9</sort_order>
+      <source_id keyed_name="Property LC State Field Option" type="ItemType" name="Property LC State Field Option">44FE6A3F6BEE404A8CF58B87B12D8D0D</source_id>
+      <stored_length>64</stored_length>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="TOC Access" id="6E9D3DCAE1A34419857529578BFC908B" action="add">
+      <category>Administration</category>
+      <related_id keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="Property LC State Field Option" type="ItemType" name="Property LC State Field Option">44FE6A3F6BEE404A8CF58B87B12D8D0D</source_id>
+     </Item>
+    
+     <Item type="View" id="32F1D029C2704FE58CAEF5BA1E254ECB" action="add">
+      <client>js</client>
+      <is_exclude_from_recently_visited>0</is_exclude_from_recently_visited>
+      <related_id keyed_name="Property LC State Field Option" type="Form">D1C65A476E0849018DDA36D5922CA676</related_id>
+      <role keyed_name="World" type="Identity">
+       <Item type="Identity" action="get" select="id">
+        <name>World</name>
+       </Item>
+      </role>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="Property LC State Field Option" type="ItemType" name="Property LC State Field Option">44FE6A3F6BEE404A8CF58B87B12D8D0D</source_id>
+      <type>default</type>
+     </Item></Relationships>
+   </Item>
+  </relationship_id>
+  <sort_order>384</sort_order>
+  <source_id keyed_name="Property" type="ItemType" name="Property">26D7CD4E033242148E2724D3D054B4D3</source_id>
+ </Item>
+ <Item type="ItemType" id="44FE6A3F6BEE404A8CF58B87B12D8D0D" action="edit">
+  <Relationships>
+   <Item type="Property" action="edit" where="source_id='44FE6A3F6BEE404A8CF58B87B12D8D0D' and name='generation'">
+    <column_alignment>left</column_alignment>
+    <data_type>integer</data_type>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_required>0</is_required>
+    <name>generation</name>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>2432</sort_order>
+    <source_id keyed_name="Property LC State Field Option" type="ItemType" name="Property LC State Field Option">44FE6A3F6BEE404A8CF58B87B12D8D0D</source_id>
+    <track_history>0</track_history>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='44FE6A3F6BEE404A8CF58B87B12D8D0D' and name='source_id'">
+    <column_alignment>left</column_alignment>
+    <column_width>100</column_width>
+    <data_source keyed_name="Property" type="ItemType" name="Property">26D7CD4E033242148E2724D3D054B4D3</data_source>
+    <data_type>item</data_type>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>1</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">Property</label>
+    <name>source_id</name>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="Property LC State Field Option" type="ItemType" name="Property LC State Field Option">44FE6A3F6BEE404A8CF58B87B12D8D0D</source_id>
+    <track_history>0</track_history>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

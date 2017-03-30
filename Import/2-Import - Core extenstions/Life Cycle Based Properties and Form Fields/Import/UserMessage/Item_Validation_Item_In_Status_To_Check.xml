@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="851A6131638D4A2BA3AC168DFAD2FFD5" action="add">
+  <custom>0</custom>
+  <name>Item_Validation_Item_In_Status_To_Check</name>
+  <text xml:lang="en">This item is already in the status to be checked</text>
+ </Item>
+</AML>

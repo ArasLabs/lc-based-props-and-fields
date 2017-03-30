@@ -1,0 +1,12 @@
+﻿<AML>
+ <Item type="ItemType" id="4F1AC04A2B484F3ABA4E20DB63808A88" action="add">
+  <name>Part</name>
+  <Relationships>
+   <Item type="Item Report" id="1C00A2D2187143B0BAE04DFC2B91BEE7" action="add">
+    <related_id keyed_name="Item LC Validation Report" type="Report">68E5118F57C04261B9F77C5B68F711D6</related_id>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="Part" type="ItemType" name="Part">4F1AC04A2B484F3ABA4E20DB63808A88</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

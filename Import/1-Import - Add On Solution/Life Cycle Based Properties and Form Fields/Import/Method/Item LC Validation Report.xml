@@ -1,0 +1,177 @@
+﻿<AML>
+ <Item type="Method" id="FA09462EB5964869A06AAA97F07EE381" action="add">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[' this generic method can be called from a report only !
+' starts other methods per ItemType to run checks an return error or warning item collections
+
+'CUSTOMIZING ...
+'To extend logic to support other itemType edit the private Method 'defineLCtransitionOfItemType'
+'You need to identify by ItemType which life cycle transition to apply the report to ...
+
+' or clone this method and set your new method name in system variable 'Item LC Validation Report Method'
+
+'MethodTemplateName=VBMain;
+
+Dim LifeCycleName As String
+Dim fromState As String
+Dim toStates As String
+Dim transitionRole As String
+Dim inn As Innovator = Me.getInnovator()
+
+Function Main() As Item
+  Dim thisItem As Item = Me
+  Dim thisId As String = Me.getAttribute("id","")
+  Dim thisType As String = Me.getAttribute("type","")
+  Dim kn As String = Me.getProperty("keyed_name","")
+  'System.Diagnostics.Debugger.Break()
+
+  Dim LCname As String = defineLCtransitionOfItemType(thisType,Me.getProperty("state","")) 
+  'also set global variables: fromState,toState,LifecCylceName,transitionRole
+
+  Dim subHeaderMessage As String = "|[H]Status Transition from '" & fromState & "' to '" & toStates  & "'"
+  
+  ' run checks for all toStates
+  Dim genericResult As Item
+  Dim genResultStr As String
+  Dim resultStr As String = ""
+  Dim toStatesArray As String() = toStates.Split(",")
+  Dim i As Integer
+  For i=0 To toStatesArray.Length-1
+  
+    Dim lcTrans As Item = getLCtransitionItem(LifeCycleName,fromState,toStatesArray(i),transitionRole)
+    If lcTrans.isError() Then Return inn.newResult(subHeaderMessage & "|[W]Life Cycle Map '" & LCname  & "' does not have a transition from '" & fromState & "' to '" & toStatesArray(i)  & "' for role '" & transitionRole & "'. See your System Administrator.")   
+  
+    'call generic LC transion validation method
+    Me.setAttribute("lifeCycleStateId",lcTrans.getProperty("to_state",""))
+    Me.setAttribute("checkMode","report all")
+
+    '1-- apply the generic Validations
+    genericResult = Me.apply("generic LC State PreTrans Checks")
+
+    genResultStr = ""
+    If genericResult.isError() Then
+      genResultStr = genericResult.getErrorString()
+      ' check if system error or error messages from checks. if error messages from checks, continue with custom checks, else return error
+      If genResultStr.substring(0,1) <> "|" Then  Return inn.newError(subHeaderMessage & "|" & genericResult.getErrorString())
+    Else
+      genResultStr = genericResult.getResult()
+    End If
+
+    '2-- apply the custom Validations, if registered (on life cycle transition)
+    resultStr = genResultStr
+    Me.setAttribute("transitionRole",transitionRole)
+    Me.setAttribute("fromState",fromState)
+    Me.setAttribute("toState",toStatesArray(i))
+    Dim customValidationMethodName As String = lcTrans.getPropertyAttribute("pre_action_validation","keyed_name","")
+
+    If customValidationMethodName <> "" Then
+      ' run itemtype specific checks
+      Dim customResult As Item = Me.apply(customValidationMethodName)
+
+      If customResult.isError() Then
+        resultStr = customResult.getErrorString()
+      Else
+        resultStr = customResult.getResult()
+      End If
+
+      If (genResultStr = "" Or genResultStr.indexOf("OK") >=0) Then   
+        If (resultStr = "" Or resultStr.indexOf("OK") >=0) Then
+          resultStr = "OK" 'both validations were successful
+        End If
+      Else
+        If (resultStr.indexOf("OK") >=0) Then
+         resultStr = genResultStr 'generic validation has messages
+        Else
+         resultStr = genResultStr & resultStr 'generic and custom validation have messages
+        End If
+      End If
+  
+    Else 'no custom validation
+      If (genResultStr = "" Or genResultStr.indexOf("OK") >=0) Then resultStr = "OK"  
+    End If   
+  
+  Next i
+
+  If resultStr.indexOf("OK") < 0 Then resultStr = subHeaderMessage & resultStr 
+  Return inn.newResult(resultStr)
+End Function
+
+'=================================
+Private Function defineLCtransitionOfItemType (thisType As String, currState As String) As String
+  'By Item Type define the list of 'toStates' to check. (comma separated, no spacesbetween commas!)
+  'NOTE: the life cycle map must have trasnsition fromState to all toStates configured (for the same tansitionRole)
+  
+  Select Case (thisType)
+  '----------
+  Case "Part"
+    LifeCycleName = "Part"
+    fromState = "Preliminary"
+    toStates = "Released"
+    transitionRole = "Aras PLM"
+    If currState = "In Review" Then
+      fromState = "In Review"
+      toStates = "Released"
+    End If
+
+  '----------
+  Case "CAD"
+    LifeCycleName = "Part"
+    fromState = "Preliminary"
+    toStates = "Released"
+    transitionRole = "Aras PLM"
+
+  '----------
+  Case "Document"
+    LifeCycleName = "Part"
+    fromState = "Preliminary"
+    toStates = "Released"
+    transitionRole = "Aras PLM"
+
+  '----------
+  Case "Express DCO"
+    LifeCycleName = "Express DCO"
+    fromState = "In Work"
+    toStates = "In Review,Released"
+    transitionRole = "Aras PLM"
+
+  End Select
+  Return LifeCycleName
+End Function
+
+'=================================
+Private Function getLCtransitionItem (lcName As String, fromState As String, toState As String, role As String) As Item
+  Dim aml As String = "<Item type='Life Cycle Transition' action='get' " & _
+  "  select='source_id(keyed_name),from_state(keyed_name),to_state(keyed_name),role(keyed_name),pre_action_validation,pre_action_post_validation'>" & _
+  " <source_id>" & _
+  "   <Item type='Life Cycle Map' action='get' select='id'>" & _
+  "	   <name>" & lcName & "</name>" & _
+  "   </Item>" & _
+  " </source_id>" & _
+  " <from_state>" & _
+  "   <Item type='Life Cycle State' action='get' select='id'>" & _
+  "	   <name>" & fromState & "</name>" & _
+  "   </Item>" & _
+  " </from_state>" & _
+  " <to_state>" & _
+  "   <Item type='Life Cycle State' action='get' select='id'>" & _
+  "	   <name>" & toState & "</name>" & _
+  "   </Item>" & _
+  " </to_state>" & _
+  " <role>" & _
+  "   <Item type='Identity' action='get' select='id'>" & _
+  "	   <name>" & role & "</name>" & _
+  "   </Item>" & _
+  " </role>" & _
+  "</Item>"
+
+  Dim q As Item = inn.newItem("","")
+  q.loadAML(aml)
+  
+  Return q.apply()
+
+End Function
+]]></method_code>
+  <method_type>VB</method_type>
+  <name>Item LC Validation Report</name>
+ </Item>
+</AML>

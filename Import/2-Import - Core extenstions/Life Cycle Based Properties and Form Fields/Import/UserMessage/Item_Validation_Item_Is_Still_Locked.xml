@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="B8321602E3BF4C9F941EF12E2084F6E7" action="add">
+  <custom>0</custom>
+  <name>Item_Validation_Item_Is_Still_Locked</name>
+  <text xml:lang="en">This item is still locked by {0}</text>
+ </Item>
+</AML>

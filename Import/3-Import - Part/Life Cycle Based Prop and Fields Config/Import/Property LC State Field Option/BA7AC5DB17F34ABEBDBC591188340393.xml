@@ -1,0 +1,14 @@
+﻿<AML>
+ <Item type="Property LC State Field Option" id="BA7AC5DB17F34ABEBDBC591188340393" action="add">
+  <enable_for_identity_id keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</enable_for_identity_id>
+  <form_field_disabled_option>disabled</form_field_disabled_option>
+  <form_field_type>listbox single select</form_field_type>
+  <form_field_visible_option>visible</form_field_visible_option>
+  <form_name>Part</form_name>
+  <life_cycle_name keyed_name="Part" type="Life Cycle Map">E337EBF706FA4172B2CD1A6487E00875</life_cycle_name>
+  <life_cycle_state_id keyed_name="In Review" type="Life Cycle State">AA93A121BC7346C4907F69820303D2A4</life_cycle_state_id>
+  <property_item_type keyed_name="Part" type="ItemType" name="Part">4F1AC04A2B484F3ABA4E20DB63808A88</property_item_type>
+  <sort_order>512</sort_order>
+  <source_id keyed_name="make_buy" type="Property">F95E298391874E21A825EF5B0238B1C7</source_id>
+ </Item>
+</AML>

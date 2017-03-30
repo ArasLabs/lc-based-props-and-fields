@@ -1,0 +1,228 @@
+﻿<AML>
+ <Item type="Form" id="E4E0C67A3A954E85AA8044DA72DF4CB1" action="add">
+  <description>Life Cycle Transitions are the paths to the next States</description>
+  <height>220</height>
+  <name>Life Cycle Transition</name>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>540</width>
+  <Relationships>
+   <Item type="Body" id="74EA511608744B4A96256AEF77FCFFC2" action="add">
+    <bg_attach>scroll</bg_attach>
+    <bg_color>btnface</bg_color>
+    <bg_image>../images/Icons/Other/1x1.gif</bg_image>
+    <bg_repeat>no-repeat</bg_repeat>
+    <sort_order>0</sort_order>
+    <source_id keyed_name="Life Cycle Transition" type="Form">E4E0C67A3A954E85AA8044DA72DF4CB1</source_id>
+    <Relationships>
+     <Item type="Field" id="57A471C5DABA48869BE8A570B30832F8" action="add">
+      <border_width>0</border_width>
+      <field_type>html</field_type>
+      <font_color>#000000</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt	</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<script>
+var lctransitionemail_id_const = top.aras.getRelationshipTypeId('Transition EMail');
+var transitiondistribution_id_const = top.aras.getRelationshipTypeId('Transition Distribution');
+
+function configureEMail() 
+{
+  if (!document.item) return;
+  var params = new Object();
+  params.item = document.item;
+  params.aras = top.aras;
+  params.ITName = "Life Cycle Transition";
+  params.editMode = document.isEditMode ? 1 : 0;
+  params.relTypeID = lctransitionemail_id_const;
+  params.distributionRelTypeID = transitiondistribution_id_const;
+  params.distributionITName = "Transition Distribution";
+
+  top.showModalDialog(top.aras.scriptsURL + "configureEMail.html", params, 'dialogHeight:450px; dialogWidth:700px; status:0; help:0; resizable:1; scroll:no');
+}
+</script>
+<a href = "" onclick = "configureEMail(); return false;" style="color:blue;"><b><script>document.write(top.aras.getResource("", "imports_core.configure_email"));</script></b></a>
+     ]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <list_no_blank>0</list_no_blank>
+      <name>configure_email</name>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="74EA511608744B4A96256AEF77FCFFC2" type="Body">74EA511608744B4A96256AEF77FCFFC2</source_id>
+      <tab_stop>1</tab_stop>
+      <x>385</x>
+      <y>30</y>
+     </Item>
+     <Item type="Field" id="45B0ACB41FD94210BD5D62592A492269" action="add">
+      <border_width>0</border_width>
+      <field_type>checkbox</field_type>
+      <font_color>#000000</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">Get Comment</label>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <name>get_comment</name>
+      <propertytype_id keyed_name="get_comment" type="Property">2BD3355B145B4E2ABC5BD59E557198AC</propertytype_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="74EA511608744B4A96256AEF77FCFFC2" type="Body">74EA511608744B4A96256AEF77FCFFC2</source_id>
+      <tab_index>2</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>228</x>
+      <y>31</y>
+     </Item>
+     <Item type="Field" id="B09D9566BF664EFFA1FC2DCDC6C65D5D" action="add">
+      <border_width>0</border_width>
+      <field_type>checkbox</field_type>
+      <font_color>#000000</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">Generic Pre Action Validation</label>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <name>is_generic_pre_action</name>
+      <propertytype_id keyed_name="is_generic_pre_action" type="Property">D9E00C4A2F5C4EF1B2A216B49C8EA6D6</propertytype_id>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="74EA511608744B4A96256AEF77FCFFC2" type="Body">74EA511608744B4A96256AEF77FCFFC2</source_id>
+      <tab_index>0</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>226</x>
+      <y>92</y>
+     </Item>
+     <Item type="Field" id="DEA8C98E447F41FBA4585BF40BB90C38" action="add">
+      <border_width>0</border_width>
+      <container>serverMethodsGroupBox</container>
+      <css>text-align:right;</css>
+      <field_type>item</field_type>
+      <font_color>#000000</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">Post</label>
+      <label_position>left</label_position>
+      <list_no_blank>0</list_no_blank>
+      <name>post_action</name>
+      <positioning>static</positioning>
+      <propertytype_id keyed_name="post_action" type="Property">B6D146CD3A7A40DAAF31645E71142684</propertytype_id>
+      <sort_order>2</sort_order>
+      <source_id keyed_name="74EA511608744B4A96256AEF77FCFFC2" type="Body">74EA511608744B4A96256AEF77FCFFC2</source_id>
+      <tab_index>4</tab_index>
+      <tab_stop>1</tab_stop>
+      <z_index>1</z_index>
+     </Item>
+     <Item type="Field" id="2534F6CA76FB4805B90F31DEB1671166" action="add">
+      <border_width>0</border_width>
+      <container>serverMethodsGroupBox</container>
+      <css>text-align:right;</css>
+      <field_type>item</field_type>
+      <font_color>#000000</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">Pre</label>
+      <label_position>left</label_position>
+      <list_no_blank>0</list_no_blank>
+      <name>pre_action</name>
+      <positioning>static</positioning>
+      <propertytype_id keyed_name="pre_action" type="Property">0B261E0870F043A89209B80FE35206E7</propertytype_id>
+      <sort_order>1</sort_order>
+      <source_id keyed_name="74EA511608744B4A96256AEF77FCFFC2" type="Body">74EA511608744B4A96256AEF77FCFFC2</source_id>
+      <tab_index>3</tab_index>
+      <tab_stop>1</tab_stop>
+      <z_index>1</z_index>
+     </Item>
+     <Item type="Field" id="05D151712E014B50BDD18273FCD2ECDC" action="add">
+      <border_width>0</border_width>
+      <field_type>item</field_type>
+      <font_color>#000000</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">Pre Action Post Validation</label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <name>pre_action_post_validation</name>
+      <propertytype_id keyed_name="pre_action_post_validation" type="Property">B7E4B66BE18142E9B101979B58D3EB61</propertytype_id>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="74EA511608744B4A96256AEF77FCFFC2" type="Body">74EA511608744B4A96256AEF77FCFFC2</source_id>
+      <tab_index>11</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>385</x>
+      <y>55</y>
+     </Item>
+     <Item type="Field" id="8F43B65F79A14180BD74BEBC94ED13E1" action="add">
+      <border_width>0</border_width>
+      <field_type>item</field_type>
+      <font_color>#000000</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">Pre Action Validations</label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <name>pre_action_validation</name>
+      <propertytype_id keyed_name="pre_action_validation" type="Property">C0E8405C66494A298DB2F2463C303A0B</propertytype_id>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="74EA511608744B4A96256AEF77FCFFC2" type="Body">74EA511608744B4A96256AEF77FCFFC2</source_id>
+      <tab_index>10</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>230</x>
+      <y>55</y>
+     </Item>
+     <Item type="Field" id="FA136A734BE54A67B2BF812CA35F4587" action="add">
+      <bg_color>#f5f5dc</bg_color>
+      <border_width>0</border_width>
+      <display_length>32</display_length>
+      <field_type>item</field_type>
+      <font_color>#000000</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">Role</label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <name>role</name>
+      <propertytype_id keyed_name="role" type="Property">44B37B4E006A422486F4B02C46AA1994</propertytype_id>
+      <sort_order>0</sort_order>
+      <source_id keyed_name="74EA511608744B4A96256AEF77FCFFC2" type="Body">74EA511608744B4A96256AEF77FCFFC2</source_id>
+      <tab_index>1</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>20</x>
+      <y>17</y>
+     </Item>
+     <Item type="Field" id="D63240A63840410A8B9D7B85F1C4C4FB" action="add">
+      <border_width>1</border_width>
+      <field_type>groupbox</field_type>
+      <html_code></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <legend xml:lang="en">Server Methods</legend>
+      <list_no_blank>0</list_no_blank>
+      <name>serverMethodsGroupBox</name>
+      <orientation>vertical</orientation>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="74EA511608744B4A96256AEF77FCFFC2" type="Body">74EA511608744B4A96256AEF77FCFFC2</source_id>
+      <tab_stop>0</tab_stop>
+      <x>19</x>
+      <y>57</y>
+     </Item>
+    </Relationships>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

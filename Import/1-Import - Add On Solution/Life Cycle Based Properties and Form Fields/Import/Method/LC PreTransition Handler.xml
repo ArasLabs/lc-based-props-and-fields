@@ -1,0 +1,77 @@
+﻿<AML>
+ <Item type="Method" id="97457ED0266B4956AD972C705BF19E17" action="add">
+  <comments>Must be called from pre-Transition events of Life Cycle Maps</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA['Use this method on any pre-transition events of a Life Cycle Map.
+
+'Then it will call 2 other server methods for validation and transition handling, if registered on this Life Cycle Transition
+'MethodTemplateName=VBMain;
+
+Dim inn As Innovator = Me.getInnovator()
+
+Function Main() As Item
+  'System.Diagnostics.Debugger.Break()
+  Dim thisType As String = Me.GetType()
+  Dim res As Item
+
+  Dim LCcontrolledItem As Item = Me.getItemsByXPath("//Item[@type='" & thisType & "']")
+  Dim transitionId As String = LCcontrolledItem.getProperty("transition","")
+  If transitionId = "" Then Return inn.newError("Life Cycle controlled item context does not contain transtion context!")
+
+  Dim transitionItem As Item = LCcontrolledItem.getPropertyItem("transition")
+  Dim fromState As String = transitionItem.getPropertyAttribute("from_state","keyed_name","")
+  Dim toState As String = transitionItem.getPropertyAttribute("to_state","keyed_name","")
+  Dim transitionRole As String = transitionItem.getPropertyAttribute("role","keyed_name","")
+
+  If toState = "" Or fromState = "" Then Return inn.newError("Life Cycle controlled item'transtion context does not have 'from_state' or 'to_state' set!")
+
+  ' add addtional context parameters as item attributes
+  LCcontrolledItem.setAttribute("lifeCycleStateId",transitionItem.getProperty("to_state",""))
+
+  'I) call generic transition validations (reads life cycle state specific property rules (from property relationships)
+  res = LCcontrolledItem.apply("generic LC State PreTrans Checks")
+  If res.isError() Then Return res
+
+  'return inn.newError("DEBUGGING")
+
+  'fetch full transition context
+  transitionItem = getLCtransitionItemById(transitionId)
+  Dim transitionPreActionValidationMethod As String = transitionItem.getPropertyAttribute("pre_action_validation","keyed_name","")
+  Dim transitionPreActionHandlerMethod As String = transitionItem.getPropertyAttribute("pre_action_post_validation","keyed_name","")
+
+  ' add addtional context parameters as item attributes
+  LCcontrolledItem.setAttribute("fromState",fromState)
+  LCcontrolledItem.setAttribute("transitionRole",transitionRole)
+  LCcontrolledItem.setAttribute("toState",toState)
+
+  'II) call validation method - with custom validations
+  If transitionPreActionValidationMethod <> "" Then
+    res = LCcontrolledItem.apply(transitionPreActionValidationMethod)
+    If res.isError() Then Return res
+  End If 
+
+  'III) call post validation actions method - with custom actions
+  If transitionPreActionHandlerMethod <> "" Then
+    res = LCcontrolledItem.apply(transitionPreActionHandlerMethod)
+    If res.isError() Then Return res
+  End If 
+
+  Return Me 'success
+End Function
+
+'=================================
+Private Function getLCtransitionItemById (transitionId As String) As Item
+  Dim aml As String = "<Item type='Life Cycle Transition' action='get' " & _
+  "  select='source_id(keyed_name),life_cycle_transition_id(from_state,to_state),pre_action_validation,pre_action_post_validation'>" & _
+  " <id>" & transitionId & "</id>" & _
+  "</Item>"
+
+  Dim q As Item = inn.newItem("","")
+  q.loadAML(aml)
+  Return q.apply()
+End Function
+]]></method_code>
+  <method_type>VB</method_type>
+  <name>LC PreTransition Handler</name>
+ </Item>
+</AML>

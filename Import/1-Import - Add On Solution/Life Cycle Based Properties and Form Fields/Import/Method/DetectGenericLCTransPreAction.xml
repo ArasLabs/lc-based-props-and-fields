@@ -1,0 +1,27 @@
+﻿<AML>
+ <Item type="Method" id="E1B4EB73C5344691896A930BDBD60206" action="add">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA['System.Diagnostics.Debugger.Break()
+
+Dim genericMethodId As String =  Me.getProperty("pre_action","")
+If genericMethodId = "" Then Return Me
+
+Dim methodItm As Item = Me.newItem("","")
+methodItm.loadAML("<Item type='Method' action='get' id='" & genericMethodId & "' select='name,generation,keyed_name' />")
+methodItm = methodItm.apply()
+
+
+If methodItm.getProperty("name","") = "LC PreTransition Handler" Then
+  Me.setProperty("is_generic_pre_action","1")
+Else
+  Me.setProperty("is_generic_pre_action","0")
+  
+  If (Me.getProperty("pre_action_validation","") <> "" Or Me.getProperty("pre_action_post_validation","") <> "") Then
+    Return Me.getInnovator().newError("Values for 'Pre Action Validations' and 'Pre Action Post Validation' can only be used, when value 'Pre Action' is set to 'LC PreTransition Handler' !")
+  End If
+End If
+Return Me]]></method_code>
+  <method_type>VB</method_type>
+  <name>DetectGenericLCTransPreAction</name>
+ </Item>
+</AML>

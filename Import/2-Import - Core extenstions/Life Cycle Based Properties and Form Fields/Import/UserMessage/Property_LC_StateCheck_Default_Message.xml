@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="99865524B48D40CDBA55F8DB4B27A646" action="add">
+  <custom>1</custom>
+  <name>Property_LC_StateCheck_Default_Message</name>
+  <text xml:lang="en">Missing value for '{property_name}'</text>
+ </Item>
+</AML>

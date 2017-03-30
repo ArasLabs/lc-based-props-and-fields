@@ -1,0 +1,14 @@
+﻿<AML>
+ <Item type="Property LC State Check" id="C13514C7EAC14E279A1528EF472011DA" action="add">
+  <depends_on_property></depends_on_property>
+  <expected_property_values></expected_property_values>
+  <is_relationship>0</is_relationship>
+  <is_required>1</is_required>
+  <life_cycle_name keyed_name="Part" type="Life Cycle Map">E337EBF706FA4172B2CD1A6487E00875</life_cycle_name>
+  <life_cycle_state_id keyed_name="Released" type="Life Cycle State">42BB3B183A7748C3B4AA9D33F7BF70AC</life_cycle_state_id>
+  <property_check_user_message xml:lang="en">Missing value for '{property_name}'</property_check_user_message>
+  <property_item_type keyed_name="Part" type="ItemType" name="Part">4F1AC04A2B484F3ABA4E20DB63808A88</property_item_type>
+  <sort_order>128</sort_order>
+  <source_id keyed_name="make_buy" type="Property">F95E298391874E21A825EF5B0238B1C7</source_id>
+ </Item>
+</AML>

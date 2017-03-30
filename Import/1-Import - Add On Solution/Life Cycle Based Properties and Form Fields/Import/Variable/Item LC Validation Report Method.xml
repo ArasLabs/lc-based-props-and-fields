@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="Variable" id="2FCB66DE8AD8469E875223D09FBEA7E0" action="add">
+  <default_value>Item LC Validation Report</default_value>
+  <name>Item LC Validation Report Method</name>
+  <value>Item LC Validation Report</value>
+ </Item>
+</AML>

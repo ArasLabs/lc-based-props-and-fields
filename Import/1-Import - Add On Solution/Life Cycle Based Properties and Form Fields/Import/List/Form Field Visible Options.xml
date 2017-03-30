@@ -1,0 +1,31 @@
+﻿<AML>
+ <Item type="List" id="63C6115950C74FE287BA9FE10D040D57" action="add">
+  <name>Form Field Visible Options</name>
+  <Relationships>
+   <Item type="Value" id="C13E004C6A604468823CBDBB946E2A60" action="add">
+    <label xml:lang="en">Hard Invisible </label>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="Form Field Visible Options" type="List">63C6115950C74FE287BA9FE10D040D57</source_id>
+    <value>hard_invisible</value>
+   </Item>
+  
+   <Item type="Value" id="540548974C524C4FBA048FD69BF3E805" action="add">
+    <label xml:lang="en">Hard Visible</label>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="Form Field Visible Options" type="List">63C6115950C74FE287BA9FE10D040D57</source_id>
+    <value>hard_visible</value>
+   </Item>
+   <Item type="Value" id="EFB7BCE8A2CD4E9383279B3FF74C4B4B" action="add">
+    <label xml:lang="en">Invisible</label>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="Form Field Visible Options" type="List">63C6115950C74FE287BA9FE10D040D57</source_id>
+    <value>invisible</value>
+   </Item>
+   <Item type="Value" id="0848FA02535743CE9DA55260D3985DCF" action="add">
+    <label xml:lang="en">Visible</label>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="Form Field Visible Options" type="List">63C6115950C74FE287BA9FE10D040D57</source_id>
+    <value>visible</value>
+   </Item></Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,92 @@
+﻿<AML>
+ <Item type="RelationshipType" id="49C8B38BCE7040E69B0F3E8EFE055002" action="add">
+  <name>Life Cycle Transition</name>
+  <relationship_id keyed_name="Life Cycle Transition" type="ItemType" name="Life Cycle Transition">
+   <Item type="ItemType" id="1E764495A5134823B30060D83FD6A2F9" action="add">
+    <name>Life Cycle Transition</name>
+    <Relationships>
+     <Item type="Property" id="D9E00C4A2F5C4EF1B2A216B49C8EA6D6" action="add">
+      <column_alignment>center</column_alignment>
+      <column_width>80</column_width>
+      <data_type>boolean</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <label xml:lang="en">Generic Pre Action Validation</label>
+      <name>is_generic_pre_action</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>1</readonly>
+      <sort_order>0</sort_order>
+      <source_id keyed_name="Life Cycle Transition" type="ItemType" name="Life Cycle Transition">1E764495A5134823B30060D83FD6A2F9</source_id>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="B7E4B66BE18142E9B101979B58D3EB61" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>120</column_width>
+      <data_source keyed_name="Method" type="ItemType" name="Method">87879A09B8044DE380D59DF22DE1867F</data_source>
+      <data_type>item</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <item_behavior>float</item_behavior>
+      <label xml:lang="en">Pre Action Post Validation</label>
+      <name>pre_action_post_validation</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>11</sort_order>
+      <source_id keyed_name="Life Cycle Transition" type="ItemType" name="Life Cycle Transition">1E764495A5134823B30060D83FD6A2F9</source_id>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Property" id="C0E8405C66494A298DB2F2463C303A0B" action="add">
+      <column_alignment>left</column_alignment>
+      <column_width>120</column_width>
+      <data_source keyed_name="Method" type="ItemType" name="Method">87879A09B8044DE380D59DF22DE1867F</data_source>
+      <data_type>item</data_type>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_required>0</is_required>
+      <item_behavior>float</item_behavior>
+      <label xml:lang="en">Pre Action Validations</label>
+      <name>pre_action_validation</name>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>10</sort_order>
+      <source_id keyed_name="Life Cycle Transition" type="ItemType" name="Life Cycle Transition">1E764495A5134823B30060D83FD6A2F9</source_id>
+      <track_history>0</track_history>
+     </Item>
+     <Item type="Server Event" id="333792C6E9F94DCF837B74095D56B134" action="add">
+      <related_id keyed_name="DetectGenericLCTransPreAction" type="Method">
+       <Item type="Method" action="get" select="id">
+        <name>DetectGenericLCTransPreAction</name>
+       </Item>
+      </related_id>
+      <server_event>onBeforeAdd</server_event>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="Life Cycle Transition" type="ItemType" name="Life Cycle Transition">1E764495A5134823B30060D83FD6A2F9</source_id>
+     </Item>
+     <Item type="Server Event" id="DE911FE96801479A8499631DD194ADC5" action="add">
+      <related_id keyed_name="DetectGenericLCTransPreAction" type="Method">
+       <Item type="Method" action="get" select="id">
+        <name>DetectGenericLCTransPreAction</name>
+       </Item>
+      </related_id>
+      <server_event>onBeforeUpdate</server_event>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="Life Cycle Transition" type="ItemType" name="Life Cycle Transition">1E764495A5134823B30060D83FD6A2F9</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+  </relationship_id>
+  <sort_order>0</sort_order>
+  <source_id keyed_name="Life Cycle Map" type="ItemType" name="Life Cycle Map">AC32527D85604A4D9FC9107C516AEF47</source_id>
+ </Item>
+</AML>

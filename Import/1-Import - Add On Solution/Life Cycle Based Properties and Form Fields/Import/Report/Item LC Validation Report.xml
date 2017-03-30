@@ -1,0 +1,226 @@
+﻿<AML>
+ <Item type="Report" id="68E5118F57C04261B9F77C5B68F711D6" action="add">
+  <label xml:lang="en">State Completeness Checks</label>
+  <location>server</location>
+  <method keyed_name="Report Item LC Validations" type="Method">
+   <Item type="Method" action="get" select="id">
+    <name>Report Item LC Validations</name>
+   </Item>
+  </method>
+  <name>Item LC Validation Report</name>
+  <report_query><![CDATA[<Item type="{@type}" id="{@id}" action="get" select=""/>
+]]></report_query>
+  <target>window</target>
+  <type>item</type>
+  <xsl_stylesheet><![CDATA[<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:user="urn:user-scripts" xmlns:aras="http://www.aras.com">
+  <xsl:output method="html" omit-xml-declaration="yes" standalone="yes" indent="yes" cdata-section-elements="script msxsl:script"></xsl:output>
+  <xsl:template match="/">
+    <html>
+      <head>
+      </head>
+      <style type="text/css" userData="Global">
+.cellSolid {
+border-top:1px #000000 solid;
+border-right:1px #000000 solid;
+border-bottom:1px #000000 solid;
+border-left:1px #000000 solid;
+}
+.cellSolidTopRight {
+border-top:1px #000000 solid;
+border-right:1px #000000 solid;
+}
+.cellSolidTopLeft {
+border-top:1px #000000 solid;
+border-left:1px #000000 solid;
+}
+.cellSolidRightBottom {
+border-right:1px #000000 solid;
+border-bottom:1px #000000 solid;
+}
+.cellSolidBottomLeft {
+border-bottom:1px #000000 solid;
+border-left:1px #000000 solid;
+}
+.cellSolidBottomLeftRight {
+border-bottom:1px #000000 solid;
+border-left:1px #000000 solid;
+border-right:1px #000000 solid;
+}
+.cellSolidTop {
+border-top:1px #000000 solid;
+}
+.cellSolidRight {
+border-right:1px #000000 solid;
+}
+.cellSolidBottom {
+border-bottom:1px #000000 solid;
+}
+.cellSolidLeft {
+border-left:1px #000000 solid;
+}
+.cellDashed {
+border-top:1px #666666 dashed;
+border-right:1px #666666 dashed;
+border-bottom:1px #666666 dashed;
+border-left:1px #666666 dashed;
+}
+.cellDashedTopRight {
+border-top:1px #666666 dashed;
+border-right:1px #666666 dashed;
+}
+.cellDashedTopLeft {
+border-top:1px #666666 dashed;
+border-left:1px #666666 dashed;
+}
+.cellDashedBottomRight {
+border-bottom:1px #666666 dashed;
+border-right:1px #666666 dashed;
+}
+.cellDashedBottomLeft {
+border-bottom:1px #666666 dashed;
+border-left:1px #666666 dashed;
+}
+.cellDashedTop {
+border-top:1px #666666 dashed;
+}
+.cellDashedRight {
+border-right:1px #666666 dashed;
+}
+.cellDashedBottom {
+border-bottom:1px #666666 dashed;
+}
+.cellDashedLeft {
+border-left:1px #666666 dashed;
+}
+.cellHeader {
+background-color:#CCCCCC;
+border-top:1px #000000 solid;
+border-right:1px #000000 solid;
+border-bottom:1px #000000 solid;
+padding:2px;
+text-align:center;
+text-transform:capitalize;
+text-align:center;
+font-family:helvetica;
+font-weight:bold;
+font-size:8pt;
+}
+.cellHeaderVertBT {
+background-color:#CCCCCC;
+border-top:1px #000000 solid;
+border-right:1px #000000 solid;
+border-bottom:1px #000000 solid;
+border-left:1px #000000 solid;
+padding:2px;
+writing-mode:tb-rl;filter: flipv fliph;
+text-align:center;
+text-transform:capitalize;
+text-align:center;
+font-family:helvetica;
+font-weight:bold;
+font-size:8pt;
+}
+.cellHeaderVertTB {
+background-color:#CCCCCC;
+border-top:1px #000000 solid;
+border-right:1px #000000 solid;
+border-bottom:1px #000000 solid;
+border-left:1px #000000 solid;
+padding:2px;
+writing-mode:tb-rl;filter: flipv flipv;
+text-align:center;
+text-transform:capitalize;
+text-align:center;
+font-family:helvetica;
+font-weight:bold;
+font-size:8pt;
+}
+</style>
+      <body topmargin="50" leftmargin="50">
+<!-- PROCESS HEADER ITEMS-->
+        <xsl:for-each select="//Item[@type='HEADER']">
+          <p style="font-family:helvetica;font-size:15pt;color:#DA1943;padding:2px;">
+            <xsl:value-of select="header"></xsl:value-of>
+            <label>...</label>
+            <label style="font-family:helvetica;font-size:10pt;color:#000000;padding:2px;">
+              <xsl:value-of select="sub_header"></xsl:value-of>
+            </label>
+		</p>
+<!-- report date - I18N compliant -->
+          <p style="font-family:helvetica;font-size:10pt;padding:2px;">
+            <label>Generated on:  </label>
+            <script>function m00(r, n){r += ""; if (!n) n = 2; while(r.length &lt; n){r = "0" + r;} return r;} var dt = new Date(); var a = top.opener.top.aras; if (a){var s = m00(dt.getUTCFullYear(),4)+"-"+m00((dt.getUTCMonth()+1))+"-"+m00(dt.getUTCDate())+"T"+m00(dt.getUTCHours())+":"+m00(dt.getUTCMinutes())+":"+m00(dt.getUTCSeconds()); s = a.IomInnovator.GetI18NSessionContext().ConvertUtcDateTimeToNeutral(s, "yyyy-MM-ddTHH:mm:ss"); s = a.convertFromNeutral(s, "date", "short_date"); document.write(s);}</script>
+        </p>
+<!-- report date - I18N compliant -->
+          <p style="font-family:helvetica;font-size:12pt;padding:2px;">
+            <b>
+              <xsl:value-of select="item_type"></xsl:value-of>
+              <label>: </label>
+            </b>
+            <label>   </label>
+            <label style="font-family:helvetica;font-size:10pt;color:#000000;padding:2px;">
+              <xsl:value-of select="item_keyed_name"></xsl:value-of>
+            </label>
+        </p>
+       </xsl:for-each>
+<!-- PROCESS ERROR ITEMS -->
+        <xsl:variable name="isTable" select="count(//Item[@type='ERROR'])"></xsl:variable>
+        <xsl:if test="$isTable &gt; 0">
+		  <!-- TABLE HEADER -->
+          <p style="font-family:helvetica;font-size:15pt;color:#DA1943;padding:2px;">ERRORS:</p>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed; overflow-x:hidden; word-wrap:break-word;">
+            <tr>
+              <td width="350"></td>
+              <td width="80"></td>
+            </tr>
+            <tr valign="top">
+              <td class="cellHeader" align="left" colspan="" rowspan="" height="" width="" style="border-left:1px #000000 solid;">Message</td>
+              <td class="cellHeader">Messge Code</td>
+          </tr>
+            <xsl:for-each select="//Item[@type='ERROR']">
+              <tr>
+                <td style="font-family:helvetica;font-size:8pt;padding:2px;" class="cellSolidBottomLeftRight" align="left">
+                  <xsl:value-of select="message_string"></xsl:value-of>
+			    </td>
+                <td style="font-family:helvetica;font-size:8pt;padding:2px;" class="cellSolidRightBottom" align="left">
+                  <xsl:value-of select="message_code"></xsl:value-of>
+            </td>
+            </tr>
+          </xsl:for-each>
+          </table>
+		</xsl:if>
+<!-- PROCESS WARNING ITEMS -->
+        <xsl:variable name="isWTable" select="count(//Item[@type='WARNING'])"></xsl:variable>
+        <xsl:if test="$isWTable &gt; 0">
+		  <!-- TABLE HEADER -->
+          <p style="font-family:helvetica;font-size:15pt;color:#DA1943;padding:2px;">WARNINGS:</p>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed; overflow-x:hidden; word-wrap:break-word;">
+            <tr>
+              <td width="400"></td>
+              <td width="80"></td>
+            </tr>
+            <tr valign="top">
+              <td class="cellHeader" align="left" colspan="" rowspan="" height="" width="" style="border-left:1px #000000 solid;">Message</td>
+              <td class="cellHeader">Message Code</td>
+          </tr>
+            <xsl:for-each select="//Item[@type='WARNING']">
+              <tr>
+                <td style="font-family:helvetica;font-size:8pt;padding:2px;" class="cellSolidBottomLeftRight" align="left">
+                  <xsl:value-of select="message_string"></xsl:value-of>
+			    </td>
+                <td style="font-family:helvetica;font-size:8pt;padding:2px;" class="cellSolidRightBottom" align="left">
+                  <xsl:value-of select="message_code"></xsl:value-of>
+            </td>
+            </tr>
+          </xsl:for-each>
+         </table>
+		</xsl:if>
+      </body>
+      <script src="../../javascript/PopupMenu.js"></script>
+      <script src="../../javascript/PopupMenu.js"></script>
+    </html>
+  </xsl:template>
+
+</xsl:stylesheet>]]></xsl_stylesheet>
+ </Item>
+</AML>

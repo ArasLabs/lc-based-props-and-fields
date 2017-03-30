@@ -1,0 +1,68 @@
+﻿<AML>
+ <Item type="Form" id="CAF99D0A8E6E44E9A681C38015FACE91" action="add">
+  <name>Part</name>
+  <Relationships>
+   <Item type="Form Event" id="605972504E5A499394076709302FE634" action="add">
+    <form_event>onformpopulated</form_event>
+    <related_id keyed_name="CommonFormFuncs_API" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>CommonFormFuncs_API</name>
+     </Item>
+    </related_id>
+    <sort_order>800</sort_order>
+    <source_id keyed_name="Part" type="Form">CAF99D0A8E6E44E9A681C38015FACE91</source_id>
+   </Item>
+   <Item type="Form Event" id="083FAE66781C43FA97BF7233CFA8E516" action="add">
+    <form_event>onformpopulated</form_event>
+    <related_id keyed_name="Fill Form Fields" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>Fill Form Fields</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="Part" type="Form">CAF99D0A8E6E44E9A681C38015FACE91</source_id>
+   </Item>
+   <Item type="Form Event" id="95EBDFC0F79D4333B74AE3A66455594F" action="add">
+    <form_event>onformpopulated</form_event>
+    <related_id keyed_name="Part Form Populate Logic" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>Part Form Populate Logic</name>
+     </Item>
+    </related_id>
+    <sort_order>801</sort_order>
+    <source_id keyed_name="Part" type="Form">CAF99D0A8E6E44E9A681C38015FACE91</source_id>
+   </Item>
+  
+   <Item type="Form Event" id="552DF40A162046D482E5157FD64BD655" action="add">
+    <form_event>onformpopulated</form_event>
+    <related_id keyed_name="PE_ShowCreateNewRevButton" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>PE_ShowCreateNewRevButton</name>
+     </Item>
+    </related_id>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="Part" type="Form">CAF99D0A8E6E44E9A681C38015FACE91</source_id>
+   </Item>
+   <Item type="Form Event" id="51CC37D60AC74BD2B195EABB4D3259A3" action="add">
+    <form_event>onformpopulated</form_event>
+    <related_id keyed_name="Show Class-Specific Fields" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>Show Class-Specific Fields</name>
+     </Item>
+    </related_id>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="Part" type="Form">CAF99D0A8E6E44E9A681C38015FACE91</source_id>
+   </Item>
+   <Item type="Form Event" id="0FF63C23E8DC45F7AD9FBDA29BB8680F" action="add">
+    <form_event>onformpopulated</form_event>
+    <related_id keyed_name="Show Goal Basis" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>Show Goal Basis</name>
+     </Item>
+    </related_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="Part" type="Form">CAF99D0A8E6E44E9A681C38015FACE91</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+ </AML>

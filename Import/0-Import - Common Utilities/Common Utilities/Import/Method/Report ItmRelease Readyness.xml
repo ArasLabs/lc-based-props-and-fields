@@ -1,0 +1,122 @@
+﻿<AML>
+ <Item type="Method" id="B4E5665EB5E54701B6B8096DBEF240A2" action="add">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[' this generic method can be called from a report only !
+' starts other methods per ItemType to run checks an return error or warning item collections
+'MethodTemplateName=VBMain;
+
+Function Main() As Item
+  'System.Diagnostics.Debugger.Break()
+  Dim thisId = Me.getAttribute("id","")
+  Dim thisType = Me.getAttribute("type","")
+  Dim inn = Me.getInnovator()
+  Dim itm As Item = Me.newItem(thisType,"get")
+  itm.setID(thisId)
+  itm.setAttribute("doGetItem","0")
+  itm.setAttribute("select","item_number,state,keyed_name")
+  itm = itm.apply()
+
+  'read variable to get method name of method to call - overriding this logic
+  Dim variableItem As Item = inn.getItemByKeyedName("Variable","Report ItmReadiness Method")
+  If Not isNothing(variableItem) Then
+    Dim overrideMethod As String = variableItem.getProperty("value","")
+    If overrideMethod <> "" Then
+      Return itm.apply(overrideMethod)
+    End If
+  End If
+
+  ' continue with this logic ...
+
+  Dim kn = itm.getProperty("keyed_name","")
+
+  Dim fromState = "Any"
+  Dim toState = getReleasedStatusName(thisType)
+
+  Dim body As String = ""
+  body= body & "<item_id>" & thisId & "</item_id>"
+  body= body & "<item_type>" & thisType & "</item_type>"
+  body= body & "<from_state>" & fromState & "</from_state>"
+  body= body & "<to_state>" & toState & "</to_state>"
+  body= body & "<check_mode>report all</check_mode>"
+
+  Dim result As Item
+  Dim resultStr As String
+  Dim tempResult As Item
+  result = Me.newItem("HEADER","")
+  result.setProperty("header","Release Readiness Checks")
+  result.setProperty("sub_header","from state '" & itm.getProperty("state","") & "' to state '" & toState & "'")
+  result.setProperty("item_type",thisType)
+  result.setProperty("item_keyed_name",kn)
+  
+  Dim methodName = getMethodNameOfChecksToApply(thisType)
+  If methodName = "" Then
+    ' no itemtype specific checks to run
+    tempResult = Me.newItem("HEADER","")
+    tempResult.setProperty("header","OK")
+    tempResult.setProperty("sub_header","completed without errors. (No readiness checks registered for this item type)")
+  Else 
+    ' run itemtype specific checks
+    tempResult = inn.applyMethod(methodName,body)
+    If tempResult.isError() Then
+       resultStr = tempResult.getErrorString()
+       If (resultStr.indexOf("<AML") <0) Then
+         Return tempResult 'non-reportable error
+       End If
+    Else
+       resultStr = tempResult.getResult()
+    End If
+
+    If (resultStr.indexOf("OK") >=0) Then
+      ' checks did not return any reportable error or warning
+      tempResult = Me.newItem("HEADER","")
+      tempResult.setProperty("header","OK")
+      tempResult.setProperty("sub_header","completed without errors.")
+    Else
+      ' checks did return 1 or more reportable errors or warnings
+      tempResult.loadAML(resultStr)
+    End If
+  End If
+
+  result.appendItem(tempResult)
+  Return result
+End Function
+
+'=================================
+Private Function getMethodNameOfChecksToApply (itemType As String) As String
+  Dim ServerMethodName = ""
+  
+  Select itemType
+  ' register your item type specific check routines here ...
+  Case "Document"
+    ServerMethodName = "Document LC Checks"
+  Case "Part"
+    ServerMethodName = ""
+  Case "CAD_Document"
+    ServerMethodName = ""
+  Case "BOM_Head"
+    ServerMethodName = ""
+
+  End Select
+  Return ServerMethodName
+End Function
+
+'=================================
+Private Function getReleasedStatusName (itemType As String) As String
+  Dim ReleasedStatusName = ""
+  
+  Select itemType
+  ' if name different form default, .... add more conditions here ...
+  Case "XXX"
+    ReleasedStatusName = "XXX"
+
+  Case Else
+    ReleasedStatusName = "Released"
+
+  End Select
+  Return ReleasedStatusName
+End Function
+]]></method_code>
+  <method_type>VB</method_type>
+  <name>Report ItmRelease Readiness</name>
+ </Item>
+</AML>

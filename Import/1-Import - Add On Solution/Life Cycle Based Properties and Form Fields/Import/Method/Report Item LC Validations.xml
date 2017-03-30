@@ -1,0 +1,134 @@
+﻿<AML>
+ <Item type="Method" id="5084006D0F9849BBA1AF792C2917E7D6" action="add">
+  <comments>Called from related Report.  Formats Validation results for use in Report Stylesheet</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[' this method can be called from a report only !
+' starts other methods per ItemType to run checks an return error or warning item collections
+'MethodTemplateName=VBMain;
+
+Function Main() As Item
+  Dim thisId As String = Me.getAttribute("id","")
+  Dim thisType As String = Me.getAttribute("type","")
+  Dim inn As Innovator = Me.getInnovator()
+  Dim itm As Item = Me.newItem(thisType,"get")
+  itm.setID(thisId)
+  itm.setAttribute("doGetItem","0")
+  itm.setAttribute("select","item_number,state,keyed_name,title,name,description,managed_by_id,locked_by_id,owned_by_id,team_id,modified_on,created_on,is_released")
+  itm = itm.apply()
+  
+  Dim errMsg As String = ""
+  'System.Diagnostics.Debugger.Break()
+
+  'read variable to get method name of method to call - overriding this logic
+  
+  'IMPORTANT:
+  'this method is expected to return error messages separated by "|" in errorString or the result string
+  'With the first character set to "|", else returned error will be interpreted as regular execution error
+  
+  Dim variableItem As Item = inn.getItemByKeyedName("Variable","Item LC Validation Report Method")
+  If Not isNothing(variableItem) Then
+    Dim overrideMethod As String = variableItem.getProperty("value","")
+    If overrideMethod <> "" Then
+      Return buildReportResults(thisType, itm.getProperty("keyed_name",""), itm.apply(overrideMethod), overrideMethod)
+    End If
+  End If
+
+  ' No Checks Logic registered ...
+  errMsg = "No checks were applied. Set system variable 'Item LC Validation Report Method' to define which checks to run." 
+  
+  Return buildReportResults(thisType, itm.getProperty("keyed_name",""), inn.newError(errMsg), "")
+  
+End Function
+
+'------
+Private Function buildReportResults(itemType As String, itemKN As String, validationRes As Item, methodName As String ) As Item
+  Dim reportMode As String = ""
+  Dim resultMsg As String = ""
+  Dim tempResult As Item
+
+  If methodName = "" Then
+    resultMsg = validationRes.getErrorString()
+    reportMode="errMessage"
+  Else
+  	
+    If validationRes.isError() Then
+      resultMsg = validationRes.getErrorString()
+      If resultMsg <> "" Then
+        If resultMsg.substring(0,1) <> "|" Then reportMode="errMessage"
+      End If
+    Else
+      resultMsg = validationRes.getResult()
+      If resultMsg <> "" then
+        If resultMsg.substring(0,1) <> "|" Then reportMode="errMessage"
+      End If
+      If resultMsg.indexOf("OK") >= 0 Then reportMode="successMessage"
+    End If
+  End If
+
+  ' set Report Header data
+  Dim result As Item = Me.newItem("HEADER","")
+  result.setProperty("header","State Completeness Checks Report")
+  result.setProperty("sub_header","")
+  result.setProperty("item_type",getItemTypeLabel(itemType))
+  result.setProperty("item_keyed_name",itemKN)
+
+  ' set Report Details data
+  If reportMode = "errMessage" Then
+    tempResult = Me.newItem("HEADER","")
+    tempResult.setProperty("header","ERROR")
+    tempResult.setProperty("sub_header",resultMsg)
+    result.appendItem(tempResult)
+    Return result
+  End If
+  If reportMode = "successMessage" Then
+    tempResult = Me.newItem("HEADER","")
+    tempResult.setProperty("header","OK")
+    tempResult.setProperty("sub_header","Validation was successful.")
+    result.appendItem(tempResult)
+    Return result
+  End If
+
+  resultMsg = resultMsg.Replace("||","|")
+  Dim resStrArray As String() = resultMsg.split("|")
+  Dim i As Integer
+  Dim checkCount As Integer = 0
+  'ignore 1st element (result has leading "|")
+  For i=1 To resStrArray.Length - 1
+  	Dim msg As String = resStrArray(i)
+  	If msg.indexOf("[H]") <0 Then
+  	 If msg.indexOf("[W]") >=0 Then
+
+  	  msg = msg.Replace("[W]","")
+      tempResult = Me.newItem("WARNING","")  	
+  	 Else
+      tempResult = Me.newItem("ERROR","")
+    End If
+     checkCount = checkCount + 1
+     tempResult.setProperty("message_string",msg)
+     tempResult.setProperty("message_code","Check-" & checkCount)
+     result.appendItem(tempResult)
+    Else
+  	  msg = msg.Replace("[H]","")
+  	  result.getItemByIndex(0).setProperty("sub_header",msg)
+    End If  	
+  Next i
+  Return result
+End Function
+
+'=================================
+Private Function getItemTypeLabel (itemType As String) As String
+  Dim qryItem As Item = Me.newItem("ItemType","get")
+  qryItem.setAttribute("doGetItem","0")
+  qryItem.setAttribute("select","name,label")
+  qryItem.setProperty("name",itemType)
+  qryItem = qryItem.apply()
+  If qryItem.isError() Then Return itemType
+  
+  Return qryItem.getProperty("label",itemType)
+End Function
+
+]]></method_code>
+  <method_type>VB</method_type>
+  <name>Report Item LC Validations</name>
+ </Item>
+</AML>

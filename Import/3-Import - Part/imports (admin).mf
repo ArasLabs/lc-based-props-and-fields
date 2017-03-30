@@ -1,0 +1,4 @@
+<imports>
+  <package name="com.aras.innovator.solution.PLM" path="PLM\Import" />
+  <package name="Life Cycle Based Properties and Form Fields Configurations" path="Life Cycle Based Prop and Fields Config\Import" />
+</imports>

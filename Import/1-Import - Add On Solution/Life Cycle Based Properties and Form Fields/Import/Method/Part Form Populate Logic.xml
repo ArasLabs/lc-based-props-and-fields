@@ -1,0 +1,96 @@
+﻿<AML>
+ <Item type="Method" id="834EBBA5485349C29607B283725094EA" action="add">
+  <comments>This is template how to include generic handling of visibility and disabling of form fields</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[// use with form event "onFormPopulate"
+// make sure method "commonFormFuncs_API" is connectd to another 
+// form event that fires before the event that calls this method !!!
+
+// You should clone this method for use with other item types and forms !!!
+
+
+//------- generic Disable and Visibility handling -------
+//To add handling of visibility and enabling of field by LC state, and Identity as configured
+//under "TOC" "Property LC State Field Options" copy this function to form's logic of "onPopulate"
+applyFormFieldConfigurationByFormAndLCstate = function(formName,LCstate)
+{
+  var propFormFieldOption = top.aras.newIOMItem (document.thisItem.getType(),"get");
+  propFormFieldOption.setProperty("form_name",formName);
+  propFormFieldOption.setProperty("state",LCstate);
+  propFormFieldOption.setID(document.thisItem.getID());
+  propFormFieldOption = propFormFieldOption.apply("generic GetFormPropFieldOpts"); // call server-side logic
+  for (var i=0; i< propFormFieldOption.getItemCount(); i++) 
+  {
+    var propName = propFormFieldOption.getItemByIndex(i).getProperty("name");
+    var fieldName = propFormFieldOption.getItemByIndex(i).getProperty("form_field_name");
+    if (fieldName === undefined || fieldName === "") {fieldName = propName;}
+    var propIsVisible = (propFormFieldOption.getItemByIndex(i).getAttribute("visible","0") === "1");
+    var propIsDisabled = (propFormFieldOption.getItemByIndex(i).getAttribute("disable","0") === "1");
+
+    if (propIsVisible)
+    {
+      commonFormFunctions.setVisibilityOfFieldByPropName(propName,propIsVisible);
+      if (propIsDisabled && document.isEditMode) {
+        var formFieldType = propFormFieldOption.getItemByIndex(i).getPropertyAttribute("form_field_name","formFieldType","text");
+        if (formFieldType.indexOf("radio") >= 0) {formFieldType="radiolist";}
+        if (formFieldType.indexOf("item") >= 0) {formFieldType="itemprop";}
+        if (formFieldType.indexOf("listbox") >= 0) {formFieldType="text";}
+        if (formFieldType.indexOf("class structure") >= 0) {formFieldType="text";}
+      
+        commonFormFunctions.enableFieldByPropName(formFieldType,fieldName,false);
+      }
+    }
+    else
+    {
+      commonFormFunctions.setVisibilityOfFieldByPropName(propName,propIsVisible);
+    }
+  }
+};
+
+//---------
+isLifeCycleStateInProcess = function (itemStateToCheck)
+{
+  //list all life cylce states where form is considered in Process or not
+  switch (itemStateToCheck)
+  {
+   case "Preliminary":
+    return false;
+
+   case "In Review":
+    return true;
+    
+   default:
+    return true;
+  }
+};
+
+//-----------------
+// --- Main logic
+var itemState = top.aras.getItemProperty(document.item,"state","");
+var thisFormName = "Part"; //##try to read from dom context later
+
+//### initialize commonFormFunctions API
+commonFormFunctions = new CommonFormFunctions("none");
+
+//### generic logic for Form Field options - defined by Property, Form, Life Cycle State and Identity (disabling)
+applyFormFieldConfigurationByFormAndLCstate (thisFormName,itemState);
+
+
+//### custom state specific logic
+if (isLifeCycleStateInProcess(itemState))
+{
+  // add your logic here...
+  commonFormFunctions.setVisibilityOfFieldByPropName("btn_submit",false);
+}
+else // ! InProcess
+{
+}
+
+// ### specific logic if form is  'locked'
+if (document.isEditMode) {
+ // add your logic here...
+}]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>Part Form Populate Logic</name>
+ </Item>
+</AML>

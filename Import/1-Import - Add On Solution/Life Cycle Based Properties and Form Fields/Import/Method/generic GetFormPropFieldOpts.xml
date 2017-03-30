@@ -1,0 +1,177 @@
+﻿<AML>
+ <Item type="Method" id="17B3AE17EE0B4016BE928C9E0486FA25" action="add">
+  <comments>returns property field configuration.  diabled, visible by state and identity</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[' arguments passed in are:
+
+' <Item type="thisType" 
+'   <state>currLCStatus</state>
+'   <form_name></form_name>
+' </Item>
+
+' RESULTS: Collection
+
+'  <Item type="Property Field Option" action="get" visible="1" disabled="1" visibleWith="otherProp" >
+'    <name>propName</name>
+'    <form_field_name formFieldType="type" >fieldName</form_field_name>
+'  </Item>
+
+
+'MethodTemplateName=VBMain;
+Dim inn As Innovator = Me.getInnovator()
+Dim thisItem As Item
+
+Function Main() As Item
+  Dim formName As String = Me.getProperty("form_name","")
+  thisItem = Me.newItem("","")
+  'System.Diagnostics.Debugger.Break()
+  
+  ' fetch specific details of this item
+  thisItem.loadAML("<Item type='" & Me.GetType() & "'" & _
+    " action='get' select='keyed_name,state,current_state,created_by_id,owned_by_id,managed_by_id,team_id'" & _
+    " serverEvents='0' doGetItem='0'><id>" & Me.getId()  & "</id></Item>")
+  thisItem = thisItem.apply()
+  If thisItem.isError() Then Return Me
+  
+  Dim LCstate As String = thisItem.getProperty("state","")
+  
+  If LCstate = "" Or formName = "" Then Return inn.newResult("") ' do nothing
+
+  Dim fieldOptions As Item = getPropertyFieldConfigurationOfForm(formName, LCstate)
+  If fieldOptions.getItemCount() <=0 Then Return inn.newResult("")
+  
+
+  Dim result As Item = inn.newItem("Property Field Option","")
+  result.setProperty("name","Dummy")
+  
+  Dim sepChar As String = ","
+  Dim visiblePropsList As String = ""
+
+  'loop
+  Dim i As Integer
+  For i=0 To fieldOptions.getItemCount() -1
+  	Dim propName As String = fieldOptions.getItemByIndex(i).getPropertyItem("source_id").getPropertyAttribute("id","keyed_name","")
+  	Dim formFieldName As String = fieldOptions.getItemByIndex(i).getProperty("form_field_name","")
+  	Dim formFieldType As String = fieldOptions.getItemByIndex(i).getProperty("form_field_type","")
+
+  	Dim isDiabled As String = "0"
+  	Dim isVisible As String = "1"
+  	
+  	Dim enableForIdentity As String = fieldOptions.getItemByIndex(i).getProperty("enable_for_identity_id","")
+  	Dim visibleWithPropName As String = fieldOptions.getItemByIndex(i).getProperty("visible_with_property","")
+  	Dim visibleOption As String = fieldOptions.getItemByIndex(i).getProperty("form_field_visible_option","")
+  	Dim disableOption As String = fieldOptions.getItemByIndex(i).getProperty("form_field_disabled_option","")
+   
+    If visibleOption = "hard_visible" Or visibleOption = "visible" Then isVisible = "1"
+    If visibleOption = "hard_invisible" Or visibleOption = "invisible" Then isVisible = "0"
+
+    If visibleOption <> "" Then
+      If isVisible="1" And (disableOption = "hard_disabled" Or disableOption = "disabled") Then isDiabled = "1"
+      If isVisible="1" And (disableOption = "hard_enabled" Or disableOption = "enabled") Then isDiabled = "0"
+      If isVisible="1" And (disableOption <> "hard_disabled" And isCurrUserInIdentity(thisItem, enableForIdentity)) Then isDiabled = "0"
+    Else
+      If disableOption = "hard_disabled" Or disableOption = "disabled" Then isDiabled = "1"
+      If disableOption = "hard_enabled" Or disableOption = "enabled" Then isDiabled = "0"
+      If disableOption <> "hard_disabled" And isCurrUserInIdentity(thisItem, enableForIdentity) Then isDiabled = "0"
+    End If
+
+    ' build results
+    Dim tmpResult As Item = inn.newItem("Property Field Option","")
+    tmpResult.setProperty("name",propName)
+    tmpResult.setProperty("form_field_name",formFieldName)
+    tmpResult.setPropertyAttribute("form_field_name","formFieldType",formFieldType)
+
+    If visibleWithPropName <> "" Then
+      tmpResult.setAttribute("visibleWith",visibleWithPropName)
+    End If
+    tmpResult.setAttribute("visible",isVisible)
+    tmpResult.setAttribute("disable",isDiabled)
+    
+    result.appendItem(tmpResult)
+
+    If isVisible = "1" Then
+       visiblePropsList = visiblePropsList & sepChar & propName
+       sepChar= ","
+    End If
+  Next i
+
+  'loop again to update visiblity for visibleWith option
+  'System.Diagnostics.Debugger.Break()
+
+  Dim visibleWithProps As Item = result.getItemsByXPath("//Item[not(@visibleWith = '')]")
+  For i=0 To visibleWithProps.getItemCount() -1
+  	Dim visibleWithPropName As String = visibleWithProps.getItemByIndex(i).getAttribute("visibleWith","")
+    If visiblePropsList <> "" Then
+     If visiblePropsList.indexOf(visibleWithPropName) >=0 Then
+      visibleWithProps.getItemByIndex(i).setAttribute("visible","1")
+     End If
+    End If
+    visibleWithProps.getItemByIndex(i).removeAttribute("visibleWith")
+  Next i
+
+  'remove dummy item
+  result.removeItem(result.getItemByIndex(0))
+  
+  Return result
+End Function
+
+'---
+Private Function getPropertyFieldConfigurationOfForm (formName As String, LCstate As String) As Item
+  Dim aml As String = "<Item type='Property LC State Field Option' action='get' " & _
+  " select='source_id(name,source_id),form_name,enable_for_identity_id(keyed_name),life_cycle_state_id(name,label)," & _
+  " form_field_visible_option,visible_with_property,form_field_disabled_option,form_field_name,form_field_type'>" & _
+  " <life_cycle_state_id>" & _
+  "   <Item type='Life Cycle State' action='get' select='id'>" & _
+  "     <name>" & LCstate & "</name>" & _
+  "   </Item>" & _
+  " </life_cycle_state_id>" & _
+  " <form_name>" & formName & "</form_name>" & _
+  " <or>" & _
+  "   <form_name>" & formName & "</form_name>" & _
+  " </or>" & _
+  "</Item>"
+
+  Dim q As Item = inn.newItem("","")
+  q.loadAML(aml)
+ 
+  Dim res As Item = q.apply()
+  
+  Return res
+End Function
+
+
+'---
+Private Function isCurrUserInIdentity (ByRef thisItem As Item, identityId As String) As Boolean
+
+  'resolve the use of system identities
+  Dim systemIdentityName As String = "" 
+  Select Case (identityId)
+    'Owner
+    Case "538B300BB2A347F396C436E9EEE1976C"
+      systemIdentityName="owned_by_id"
+    'Creator
+    Case "8FE5430B42014D94AE83246F299D9CC4"
+      systemIdentityName="created_by_id"
+    'Manager
+    Case "9200A800443E4A5AAA80D0BCE5760307"
+      systemIdentityName="managed_by_id"
+    'Team
+    Case "275764859FDE49AF817571E8BFD8CBB5"
+      systemIdentityName="team_id"
+  End Select
+
+  If systemIdentityName <> "" Then identityId = thisItem.getProperty(systemIdentityName,"")
+  
+  If identityId = "" Then Return False
+
+  If (CCO.Permissions.IdentityListHasId(Aras.Server.Security.Permissions.Current.IdentitiesList, identityId)) Then
+    Return True
+  Else
+   Return False
+  End If
+End Function
+]]></method_code>
+  <method_type>VB</method_type>
+  <name>generic GetFormPropFieldOpts</name>
+ </Item>
+</AML>
