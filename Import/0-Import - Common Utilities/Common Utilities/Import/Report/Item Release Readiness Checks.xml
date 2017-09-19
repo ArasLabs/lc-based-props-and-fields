@@ -149,7 +149,7 @@ font-size:8pt;
 <!-- report date - I18N compliant -->
           <p style="font-family:helvetica;font-size:10pt;padding:2px;">
             <label>Generated on:  </label>
-            <script>function m00(r, n){r += ""; if (!n) n = 2; while(r.length &lt; n){r = "0" + r;} return r;} var dt = new Date(); var a = top.opener.top.aras; if (a){var s = m00(dt.getUTCFullYear(),4)+"-"+m00((dt.getUTCMonth()+1))+"-"+m00(dt.getUTCDate())+"T"+m00(dt.getUTCHours())+":"+m00(dt.getUTCMinutes())+":"+m00(dt.getUTCSeconds()); s = a.IomInnovator.GetI18NSessionContext().ConvertUtcDateTimeToNeutral(s, "yyyy-MM-ddTHH:mm:ss"); s = a.convertFromNeutral(s, "date", "short_date"); document.write(s);}</script>
+            <script>function m00(r, n){r += ""; if (!n) n = 2; while(r.length &lt; n){r = "0" + r;} return r;} var dt = new Date(); var a = parent.aras; if (a){var s = m00(dt.getUTCFullYear(),4)+"-"+m00((dt.getUTCMonth()+1))+"-"+m00(dt.getUTCDate())+"T"+m00(dt.getUTCHours())+":"+m00(dt.getUTCMinutes())+":"+m00(dt.getUTCSeconds()); s = a.IomInnovator.GetI18NSessionContext().ConvertUtcDateTimeToNeutral(s, "yyyy-MM-ddTHH:mm:ss"); s = a.convertFromNeutral(s, "date", "short_date"); document.write(s);}</script>
         </p>
 <!-- report date - I18N compliant -->
           <p style="font-family:helvetica;font-size:12pt;padding:2px;">
