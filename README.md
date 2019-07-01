@@ -3,6 +3,8 @@
 
 >For current projects, please visit the new Aras Community Projects page on the updated Aras Community site: http://community.aras.com/projects
 
+>The updated version of this project is here: https://github.com/ArasLabs/property-advanced-validation
+
 # Life Cycle Based Properties and Form Fields
 
 Latest version: r1-0. Adds the definition of generic property checks base on life cycle state of an item. it also add a report to show the results of these checks
